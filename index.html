@@ -9,33 +9,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* Fondo unificado sobre familia navy (antes había negro + navy compitiendo) */
-    --bg:#040B1C;
-    --navy:#050F26;
-    --navy-raised:#0A1830;
-    --surface:#081327;
-    --surface-2:#0A1830;
-    --text-1:#FAFAFA;
-    --text-2:#9FB0C9;
-    --text-3:#5E7291;
-    --border:rgba(255,255,255,0.07);
-    --border-strong:rgba(255,255,255,0.14);
-    /* El verde SOLO confirma: activo + acción primaria. No decora. */
-    --green:#22c55e;
-    --green-hover:#3ED673;
-    --green-text:#5FE08A;
-    --red:#ef4444;
-    /* Estados: vocabulario de color más allá del verde.
-       Ámbar = atención (límite cerca, pausado); rojo = error/destructivo. */
-    --amber:#f59e0b;
-    --amber-text:#FCD34D;
-    --amber-bg:rgba(245,158,11,0.08);
-    --amber-border:rgba(245,158,11,0.28);
-    --red-text:#F87171;
-    --red-bg:rgba(239,68,68,0.06);
-    --red-border:rgba(239,68,68,0.28);
-    --green-bg:rgba(34,197,94,0.08);
-    --green-border:rgba(34,197,94,0.28);
+    /* Tema claro SaaS: canvas gris muy claro, tarjetas blancas */
+    --bg:#F7F8FA;
+    --navy:#FFFFFF;
+    --navy-raised:#F1F5F9;
+    --surface:#FFFFFF;
+    --surface-2:#F8FAFC;
+    --text-1:#0F172A;
+    --text-2:#475569;
+    --text-3:#94A3B8;
+    --border:#E7EAF0;
+    --border-strong:#D8DEE8;
+    /* Azul = marca y acción primaria */
+    --blue:#2563EB;
+    --blue-hover:#1D4ED8;
+    --blue-text:#2563EB;
+    --blue-bg:#EFF4FF;
+    --blue-border:#DBE6FE;
+    /* Verde = estados positivos, confirmación, "activo" */
+    --green:#16A34A;
+    --green-hover:#15803D;
+    --green-text:#15803D;
+    --red:#DC2626;
+    /* Estados: ámbar = atención (límite cerca, pausado); rojo = error/destructivo. */
+    --amber:#D97706;
+    --amber-text:#B45309;
+    --amber-bg:#FEF6E7;
+    --amber-border:#FCE4B8;
+    --red-text:#DC2626;
+    --red-bg:#FEF2F2;
+    --red-border:#FECACA;
+    --green-bg:#ECFDF3;
+    --green-border:#BBF7D0;
     /* Escala tipográfica (roles fijos, no tamaños sueltos) */
     --fs-display:2.1rem;   /* números protagonistas, títulos de página grandes */
     --fs-xl:1.35rem;       /* h1 de vista */
@@ -60,7 +65,7 @@
     margin:0;
     background:var(--bg);
     color:var(--text-1);
-    font-family:'Satoshi','Inter',-apple-system,sans-serif;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     -webkit-font-smoothing:antialiased;
   }
   a{color:inherit;text-decoration:none;}
@@ -77,21 +82,25 @@
     position:sticky;top:0;height:100vh;
   }
   .logo{display:flex;align-items:center;gap:0.5rem;padding:0 0.5rem 1.5rem;margin-bottom:1rem;border-bottom:1px solid var(--border);}
-  .logo-mark{width:26px;height:26px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#06150c;font-weight:700;font-size:0.85rem;}
+  .logo-mark{width:26px;height:26px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;}
   .logo-text{font-weight:700;font-size:1rem;letter-spacing:-0.02em;}
+  /* El logo embebido es un PNG blanco (era para fondo oscuro). Sobre el fondo
+     claro lo volvemos negro conservando su forma. La landing sigue oscura y usa
+     su propio logo blanco (.lp-logo-img), que no se toca. */
+  .logo img, .auth-logo img{filter:brightness(0);}
 
   .nav-section{margin-bottom:1.5rem;}
   .nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.6rem 0.75rem;border-radius:10px;color:var(--text-2);font-size:0.9rem;font-weight:500;cursor:pointer;transition:background .15s, color .15s;}
-  .nav-item:hover{background:rgba(255,255,255,0.04);color:var(--text-1);}
-  .nav-item.active{background:var(--navy-raised);color:var(--text-1);border:1px solid var(--border);}
+  .nav-item:hover{background:var(--surface-2);color:var(--text-1);}
+  .nav-item.active{background:var(--blue-bg);color:var(--blue);font-weight:600;border:1px solid var(--blue-border);}
   .nav-icon{width:18px;height:18px;flex-shrink:0;opacity:0.85;}
 
   .sidebar-cta{margin-top:auto;padding-top:1rem;}
-  .plan-pill{margin-top:1rem;border:1px solid var(--border);border-radius:10px;padding:0.75rem;font-size:0.78rem;color:var(--text-2);}
+  .plan-pill{margin-top:1rem;border:1px solid var(--border);border-radius:10px;padding:0.75rem;font-size:0.78rem;color:var(--text-2);background:var(--blue-bg);}
   .plan-pill .plan-name{color:var(--text-1);font-weight:700;font-size:0.82rem;margin-bottom:0.35rem;display:flex;justify-content:space-between;align-items:center;}
-  .plan-badge{background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:0.15rem 0.45rem;border-radius:5px;}
-  .usage-bar{height:5px;background:rgba(255,255,255,0.07);border-radius:4px;margin-top:0.5rem;overflow:hidden;}
-  .usage-bar-fill{height:100%;background:var(--green);border-radius:4px;}
+  .plan-badge{background:var(--surface);color:var(--text-2);border:1px solid var(--border);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:0.15rem 0.45rem;border-radius:5px;}
+  .usage-bar{height:5px;background:#EAEEF5;border-radius:4px;margin-top:0.5rem;overflow:hidden;}
+  .usage-bar-fill{height:100%;background:var(--blue);border-radius:4px;}
 
   /* ===================== BUTTONS (unificados) ===================== */
   .btn{
@@ -100,8 +109,8 @@
     cursor:pointer;white-space:nowrap;transition:background .15s, border-color .15s, color .15s;
     font-family:inherit;
   }
-  .btn-primary{background:var(--green);color:#06150c;padding:0.65rem 1.3rem;}
-  .btn-primary:hover{background:var(--green-hover);}
+  .btn-primary{background:var(--blue);color:#fff;padding:0.65rem 1.3rem;}
+  .btn-primary:hover{background:var(--blue-hover);}
   .btn-primary:disabled{opacity:0.45;cursor:not-allowed;}
   .btn-primary.lg{padding:0.85rem 1.8rem;width:100%;font-size:0.95rem;}
   .btn-primary.full-sidebar{width:100%;}
@@ -179,7 +188,7 @@
 
   .status-pill{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:0.28rem 0.6rem;border-radius:7px;flex-shrink:0;}
   .status-active{background:rgba(34,197,94,0.12);color:var(--green-text);}
-  .status-paused{background:rgba(255,255,255,0.06);color:var(--text-2);}
+  .status-paused{background:#EDF0F5;color:var(--text-2);}
 
   /* ===================== INICIO — RESUMEN REAL ===================== */
   .summary-hero{
@@ -258,7 +267,7 @@
     color:var(--text-3);padding:0.28rem 0.55rem;cursor:pointer;flex-shrink:0;
     transition:color .15s,border-color .15s,background .15s;
   }
-  .ac-posts-close:hover{color:var(--text-1);border-color:var(--border-strong);background:rgba(255,255,255,0.05);}
+  .ac-posts-close:hover{color:var(--text-1);border-color:var(--border-strong);background:#F1F5F9;}
   .ac-posts-panel .pcard{margin-bottom:0.5rem;}
   .ac-posts-panel .pcard:last-child{margin-bottom:0;}
   .ac-posts-empty{font-size:0.8rem;color:var(--text-3);line-height:1.5;}
@@ -298,8 +307,8 @@
   .ac-col-actions{display:flex;justify-content:flex-end;}
 
   .ac-keyword-tag{
-    font-size:0.66rem;font-weight:700;color:var(--green-text);
-    background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);
+    font-size:0.66rem;font-weight:700;color:var(--blue-text);
+    background:var(--blue-bg);border:1px solid var(--blue-border);
     border-radius:5px;padding:0.12rem 0.42rem;letter-spacing:.03em;
     flex-shrink:0;line-height:1.3;
   }
@@ -325,12 +334,12 @@
   .ac-stat-label{font-size:0.72rem;color:var(--text-3);margin-top:0.1rem;}
   .ac-actions{display:flex;align-items:center;gap:0.3rem;flex-shrink:0;position:relative;}
   .icon-btn{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-2);cursor:pointer;position:relative;}
-  .icon-btn:hover{background:rgba(255,255,255,0.05);color:var(--text-1);}
+  .icon-btn:hover{background:#F1F5F9;color:var(--text-1);}
 
   .menu{position:absolute;top:40px;right:0;background:var(--navy-raised);border:1px solid var(--border-strong);border-radius:10px;min-width:160px;box-shadow:0 10px 30px rgba(0,0,0,0.4);z-index:10;display:none;overflow:hidden;}
   .menu.open{display:block;}
   .menu-item{padding:0.6rem 0.9rem;font-size:0.84rem;color:var(--text-1);cursor:pointer;display:flex;align-items:center;gap:0.5rem;}
-  .menu-item:hover{background:rgba(255,255,255,0.06);}
+  .menu-item:hover{background:#EDF0F5;}
   .menu-item.danger{color:var(--red);}
 
   /* ===================== CREATE FLOW VIEW ===================== */
@@ -345,8 +354,8 @@
   .step.active{color:var(--text-1);}
   .step.done{color:var(--green-text);}
   .step-dot{width:20px;height:20px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:0.7rem;}
-  .step.active .step-dot{background:var(--green);color:#06150c;border-color:var(--green);}
-  .step.done .step-dot{background:rgba(34,197,94,0.15);border-color:var(--green);color:var(--green-text);}
+  .step.active .step-dot{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .step.done .step-dot{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);}
   .step-line{width:28px;height:1px;background:var(--border-strong);}
 
   .create-layout{display:flex;min-height:calc(100vh - 65px);}
@@ -441,7 +450,7 @@
   /* Barra de uso */
   .usage-block{margin-bottom:1.1rem;}
   .usage-block-top{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;}
-  .usage-bar-lg{height:7px;background:rgba(255,255,255,0.07);border-radius:5px;overflow:hidden;margin-top:0.3rem;}
+  .usage-bar-lg{height:7px;background:#EAEEF5;border-radius:5px;overflow:hidden;margin-top:0.3rem;}
   .usage-bar-lg-fill{height:100%;border-radius:5px;background:var(--green);}
 
   /* ===================== CUENTA — REDISEÑO "SEÑAL SILENTE" GLASS SOBRIO ===================== */
@@ -460,19 +469,19 @@
   .acc-wrap > .acc-section{grid-column:1;min-width:0;}
   /* El panel de uso arranca a la altura de "Plan y perfil" (fila 2) y se
      estira hasta el final de "Cuenta" (fila 3). */
-  .acc-aside{grid-column:2;grid-row:2 / span 2;align-self:stretch;}
+  .acc-aside{grid-column:2;grid-row:2 / span 2;align-self:stretch;display:flex;flex-direction:column;gap:1rem;}
   .acc-usage-card{
-    height:100%;
+    flex:1;
     display:flex;flex-direction:column;
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:var(--r-lg);
-    padding:1.4rem 1.4rem 1.3rem;
+    padding:0.85rem 1.4rem 0.8rem;
   }
   /* Encabezado: plan actual como contexto */
   .acc-usage-plan{
     display:flex;flex-direction:column;gap:0.3rem;
-    padding-bottom:1.2rem;margin-bottom:0.4rem;border-bottom:1px solid var(--border);
+    padding-bottom:0.45rem;margin-bottom:0.1rem;border-bottom:1px solid var(--border);
   }
   .acc-usage-plan-k{font-family:var(--mono);font-size:0.6rem;letter-spacing:.14em;color:var(--text-3);}
   .acc-usage-plan-v{font-size:1.05rem;font-weight:700;letter-spacing:-0.01em;color:var(--text-1);}
@@ -481,12 +490,12 @@
   /* Fila de dato simple (detecciones) */
   .acc-usage-stat{
     display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    padding:0.95rem 0 0;margin-top:0.15rem;border-top:1px solid var(--border);
+    padding:0.5rem 0 0;margin-top:0.15rem;border-top:1px solid var(--border);
   }
   .acc-usage-stat .acc-usage-value{font-size:1.05rem;}
   /* Pie: renovación, anclado al fondo */
   .acc-usage-foot{
-    margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);
+    margin-top:0.4rem;padding-top:0.45rem;border-top:1px solid var(--border);
     font-family:var(--mono);font-size:0.64rem;letter-spacing:.04em;color:var(--text-3);line-height:1.5;
   }
   .acc-usage-card .acc-usage-row:first-of-type{padding-top:0;}
@@ -502,6 +511,24 @@
       border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem;
     }
   }
+  /* Resumen de cuenta: tarjeta compacta bajo el uso del plan.
+     Verde = estado activo/confirmado (vocabulario del sistema). */
+  .acc-sum-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:1.3rem 1.4rem;
+  }
+  .acc-sum-head{font-family:var(--mono);font-size:0.6rem;letter-spacing:.14em;color:var(--text-3);margin-bottom:0.9rem;}
+  .acc-sum-list{display:flex;flex-direction:column;}
+  .acc-sum-row{
+    display:flex;justify-content:space-between;align-items:center;gap:1rem;
+    padding:0.72rem 0;border-top:1px solid var(--border);
+  }
+  .acc-sum-row:first-child{border-top:none;padding-top:0;}
+  .acc-sum-k{font-size:0.82rem;color:var(--text-3);}
+  .acc-sum-v{font-size:0.85rem;color:var(--text-1);font-weight:600;display:inline-flex;align-items:center;gap:0.45rem;text-align:right;}
+  .acc-sum-dot{width:7px;height:7px;border-radius:50%;background:var(--text-3);flex-shrink:0;}
+  .acc-sum-dot.ok{background:var(--green);}
+
   /* Sección = unidad lógica separada por ritmo vertical y una hairline.
      No es una caja: no tiene borde propio ni fondo. */
   .acc-section{
@@ -554,7 +581,7 @@
     text-align:right;letter-spacing:-0.01em;
   }
   .acc-usage-value .lim{font-size:0.8rem;color:var(--text-3);font-weight:500;}
-  .acc-usage-track{grid-column:1 / -1;height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;}
+  .acc-usage-track{grid-column:1 / -1;height:5px;background:#EDF0F5;border-radius:99px;overflow:hidden;}
   .acc-usage-fill{height:100%;border-radius:99px;background:var(--green);transition:width .5s cubic-bezier(.2,.8,.2,1), background .3s ease;}
   /* Estados del medidor (vocabulario de color del sistema) */
   .acc-usage-fill.is-warning, .usage-bar-fill.is-warning{background:var(--amber);}
@@ -577,7 +604,7 @@
     font-size:0.78rem;font-weight:600;padding:0.42rem 0.9rem;border-radius:9px;cursor:pointer;
     transition:border-color .15s,color .15s,background .15s;font-family:inherit;white-space:nowrap;
   }
-  .acc-inline-btn:hover{border-color:var(--text-3);color:var(--text-1);background:rgba(255,255,255,0.04);}
+  .acc-inline-btn:hover{border-color:var(--text-3);color:var(--text-1);background:#F1F5F9;}
 
   /* Barra de acción de sección (p. ej. "Cambiar de plan") alineada al eje */
   .acc-section-foot{margin-top:1.5rem;}
@@ -648,11 +675,11 @@
     padding:0.3rem 0.4rem;border-radius:10px;cursor:pointer;flex:1;
   }
   .bottom-nav-item svg{width:20px;height:20px;}
-  .bottom-nav-item.active{color:var(--green-text);}
+  .bottom-nav-item.active{color:var(--blue);}
   .bottom-nav-fab{
-    width:48px;height:48px;border-radius:50%;background:var(--green);
+    width:48px;height:48px;border-radius:50%;background:var(--blue);
     display:flex;align-items:center;justify-content:center;
-    margin-top:-22px;box-shadow:0 4px 14px rgba(34,197,94,0.4);
+    margin-top:-22px;box-shadow:0 4px 14px rgba(37,99,235,0.4);
     cursor:pointer;flex-shrink:0;border:3px solid var(--bg);
   }
 
@@ -790,7 +817,7 @@
     letter-spacing:.14em;text-transform:uppercase;background:var(--text-1);color:var(--navy);
     padding:0.2rem 0.5rem;border-radius:6px;font-weight:700;
   }
-  .plan-opt.current .plan-badge-top{background:var(--green);color:#06150c;}
+  .plan-opt.current .plan-badge-top{background:var(--green);color:#fff;}
   .plan-opt-head{display:flex;align-items:baseline;justify-content:space-between;gap:0.6rem;}
   .plan-opt-name{font-weight:700;font-size:1.05rem;color:var(--text-1);letter-spacing:-0.01em;}
   .plan-opt-price{font-family:var(--mono);font-size:1.15rem;color:var(--text-1);font-weight:600;white-space:nowrap;}
@@ -860,7 +887,7 @@
     display:flex;align-items:center;justify-content:center;
     transition:color .15s,border-color .15s,background .15s;
   }
-  .pcard-btn:hover{color:var(--text-1);border-color:var(--border-strong);background:rgba(255,255,255,0.05);}
+  .pcard-btn:hover{color:var(--text-1);border-color:var(--border-strong);background:#F1F5F9;}
   .pcard-btn.danger:hover{color:#f87171;border-color:rgba(248,113,113,0.4);background:rgba(248,113,113,0.08);}
   .post-url-hint{font-size:0.74rem;color:var(--text-3);margin-top:0.6rem;line-height:1.5;}
   .post-url-error{display:none;font-size:0.78rem;color:#f87171;margin-top:0.5rem;}
@@ -876,16 +903,16 @@
    confirma, elevación sutil, microinteracciones discretas.
    ================================================================== */
 :root{
-  --bg:#02060F;
-  --navy:#040D1E;
-  --surface:#071122;
-  --surface-2:#0A1729;
-  --navy-raised:#0C1A2F;
-  --border:rgba(148,180,222,0.09);
-  --border-strong:rgba(148,180,222,0.18);
-  --shadow-card:0 1px 2px rgba(0,0,0,.25), 0 12px 32px -20px rgba(0,0,0,.6);
-  --shadow-float:0 18px 44px -18px rgba(0,0,0,.65);
-  --shadow-modal:0 24px 60px -20px rgba(0,0,0,.6);
+  --bg:#F7F8FA;
+  --navy:#FFFFFF;
+  --surface:#FFFFFF;
+  --surface-2:#F8FAFC;
+  --navy-raised:#F1F5F9;
+  --border:#E7EAF0;
+  --border-strong:#D8DEE8;
+  --shadow-card:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+  --shadow-float:0 8px 24px -8px rgba(16,24,40,.16);
+  --shadow-modal:0 20px 48px -16px rgba(16,24,40,.24);
   --ease:cubic-bezier(.4,0,.2,1);
 }
 #app-root{background:var(--bg);}
@@ -899,11 +926,11 @@
   font-size:0.875rem;border:1px solid transparent;
   transition:background .18s var(--ease), color .18s var(--ease);
 }
-.nav-item:hover{background:rgba(255,255,255,0.035);}
-.nav-item.active{background:var(--navy-raised);border-color:transparent;}
+.nav-item:hover{background:#F3F5F9;}
+.nav-item.active{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue);font-weight:600;}
 .nav-item.active::before{
   content:'';position:absolute;left:-1.15rem;top:50%;transform:translateY(-50%);
-  width:3px;height:18px;border-radius:0 3px 3px 0;background:var(--green);
+  width:3px;height:18px;border-radius:0 3px 3px 0;background:var(--blue);
 }
 .nav-icon{opacity:0.75;transition:opacity .18s var(--ease);}
 .nav-item.active .nav-icon,.nav-item:hover .nav-icon{opacity:1;}
@@ -921,7 +948,7 @@
 }
 .plan-pill .plan-name{font-size:0.84rem;margin-bottom:0.4rem;letter-spacing:-0.01em;}
 .plan-badge{background:rgba(34,197,94,.1);color:var(--green-text);border:1px solid rgba(34,197,94,.25);border-radius:6px;}
-.usage-bar{height:4px;margin-top:0.6rem;background:rgba(255,255,255,0.06);}
+.usage-bar{height:4px;margin-top:0.6rem;background:#EDF0F5;}
 .usage-bar-fill{transition:width .5s var(--ease);}
 
 /* ---------- Lienzo principal: aire y ritmo vertical ---------- */
@@ -963,9 +990,9 @@
              color .18s var(--ease), transform .15s var(--ease), box-shadow .2s var(--ease);
 }
 .btn:active{transform:scale(0.98);}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 22px -10px rgba(34,197,94,.45);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 22px -10px rgba(37,99,235,.45);}
 .btn-primary:disabled{transform:none;box-shadow:none;}
-.btn-ghost:hover{background:rgba(255,255,255,0.035);}
+.btn-ghost:hover{background:#F3F5F9;}
 
 .icon-btn{border-radius:9px;transition:background .18s var(--ease), color .18s var(--ease);}
 
@@ -1097,6 +1124,42 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 .reply-opt.selected .reply-text{color:var(--text-1);}
 .reply-opt:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(34,197,94,.22);}
 
+/* ---- Bloque opcional "pedir seguir antes de entregar" ---- */
+.gate-block{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:0.95rem 1rem;
+}
+.gate-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.gate-title{font-size:0.88rem;font-weight:600;color:var(--text-1);}
+.gate-sub{font-size:0.74rem;color:var(--text-3);margin-top:0.15rem;}
+.switch{
+  flex-shrink:0;width:40px;height:23px;border-radius:999px;
+  background:var(--navy-raised);border:1px solid var(--border-strong);
+  position:relative;cursor:pointer;padding:0;transition:background .18s var(--ease), border-color .18s var(--ease);
+}
+.switch .switch-knob{
+  position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;
+  background:var(--text-3);transition:transform .18s var(--ease), background .18s var(--ease);
+}
+.switch[aria-checked="true"]{background:var(--green-bg);border-color:var(--green-border);}
+.switch[aria-checked="true"] .switch-knob{transform:translateX(17px);background:var(--green);}
+.switch:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(34,197,94,.22);}
+.gate-body{margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid var(--border);}
+.gate-btn-preview{
+  display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;
+  margin-top:0.85rem;
+}
+.gate-btn-label{font-size:0.78rem;color:var(--text-3);}
+.gate-qr, .prev-qr{
+  display:inline-flex;align-items:center;font-size:0.8rem;font-weight:600;
+  color:var(--green-text);background:rgba(34,197,94,0.1);
+  border:1px solid rgba(34,197,94,0.32);border-radius:999px;padding:0.32rem 0.8rem;
+}
+.gate-note{margin-top:0.7rem;line-height:1.5;}
+/* Marca discreta del plan Free dentro del mensaje (· Powered by WalkyChat) */
+.brand-inline{color:var(--text-3);font-size:0.72rem;opacity:0.8;}
+.prev-qr-row{margin-top:0.5rem;}
+
 /* ---- Vista previa del wizard: la secuencia real, plana y seria ---- */
 .prev-panel{
   width:100%;max-width:360px;
@@ -1121,8 +1184,8 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 .prev-body{font-size:0.84rem;color:var(--text-2);line-height:1.5;word-break:break-word;}
 .prev-kw{
   font-family:var(--mono);font-weight:700;font-size:0.78rem;letter-spacing:.05em;
-  color:var(--green-text);background:rgba(34,197,94,0.1);
-  border:1px solid rgba(34,197,94,0.28);border-radius:6px;padding:0.08rem 0.4rem;
+  color:var(--blue-text);background:var(--blue-bg);
+  border:1px solid var(--blue-border);border-radius:6px;padding:0.08rem 0.4rem;
 }
 .prev-dm{
   background:var(--navy-raised);border:1px solid var(--border);
@@ -1206,16 +1269,16 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     radial-gradient(90% 70% at 12% 92%, rgba(42,43,73,.55), transparent 60%),
     linear-gradient(165deg, var(--lp-navy) 0%, var(--lp-navy-deep) 48%, var(--lp-bg-dark) 100%);
   color:var(--lp-on-dark);
-  padding:44px 0 72px;position:relative;overflow:hidden;
+  padding:40px 0 64px;position:relative;overflow:hidden;
 }
 /* transición difuminada hacia la sección clara siguiente */
 #landing-screen .lp-hero::after{
   content:"";position:absolute;left:0;right:0;bottom:0;height:120px;pointer-events:none;
   background:linear-gradient(to bottom, transparent, rgba(255,255,255,.06));
 }
-#landing-screen .lp-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start;position:relative;z-index:1;}
+#landing-screen .lp-hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:56px;align-items:start;position:relative;z-index:1;}
 #landing-screen .lp-hero h1{
-  font-size:clamp(2.3rem,4.2vw,3.15rem);font-weight:700;letter-spacing:-.035em;line-height:1.07;
+  font-size:clamp(2.4rem,4vw,3.2rem);font-weight:700;letter-spacing:-.025em;line-height:1.13;
   color:#fff;margin:0 0 1.05rem;
 }
 #landing-screen .lp-hero h1 .hl{
@@ -1491,7 +1554,11 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 
 /* --- Móvil (≤600px) --- */
 @media (max-width:600px){
-  #landing-screen .lp-hero{padding:52px 0 60px;}
+  #landing-screen .lp-hero{padding:36px 0 48px;}
+  #landing-screen .lp-hero h1{font-size:2.1rem;line-height:1.16;letter-spacing:-.02em;margin-bottom:.85rem;}
+  #landing-screen .lp-hero-sub{font-size:.95rem;margin-bottom:1.1rem;}
+  #landing-screen .lp-check-line{margin-bottom:1.1rem;}
+  #landing-screen .lp-hero-note{margin-top:1.1rem;}
   #landing-screen .lp-sec{padding:58px 0;}
   #landing-screen .lp-footer{margin-top:64px;padding:2.8rem 0 2rem;}
   #landing-screen .lp-footer-in{flex-direction:column;gap:1.6rem;text-align:center;align-items:center;}
@@ -1504,7 +1571,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 /* --- Móvil pequeño (≤400px) --- */
 @media (max-width:400px){
   #landing-screen .lp-wrap{padding:0 16px;}
-  #landing-screen .lp-hero h1{font-size:2.05rem;letter-spacing:-.03em;}
+  #landing-screen .lp-hero h1{font-size:1.85rem;line-height:1.18;letter-spacing:-.015em;}
   #landing-screen .lp-logo{font-size:1rem;}
   /* En pantallas muy chicas, el login pasa a texto simple para no apretar */
   #landing-screen .lp-nav-actions .lp-btn-ghost-dark{padding:.5rem .6rem;}
@@ -1620,87 +1687,87 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 }
 #landing-screen .lp-appwin{
   width:100%;max-width:500px;
-  background:#060D1C;
-  border:1px solid rgba(148,180,222,.16);
-  border-radius:12px;overflow:hidden;
-  box-shadow:0 24px 60px -28px rgba(0,0,0,.6);
+  background:#FFFFFF;
+  border:1px solid #E7EAF0;
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 70px -24px rgba(2,10,25,.55), 0 4px 14px -6px rgba(2,10,25,.3);
   font-family:'Inter',-apple-system,sans-serif;
   text-align:left;
 }
 /* Barra de navegador */
 #landing-screen .lp-appwin-bar{
   display:flex;align-items:center;gap:.7rem;
-  padding:.55rem .85rem;background:#0A1426;
-  border-bottom:1px solid rgba(148,180,222,.12);
+  padding:.55rem .85rem;background:#F1F5F9;
+  border-bottom:1px solid #E7EAF0;
 }
 #landing-screen .lp-appwin-dots{display:flex;gap:5px;flex-shrink:0;}
-#landing-screen .lp-appwin-dots i{width:9px;height:9px;border-radius:50%;background:rgba(148,180,222,.22);}
+#landing-screen .lp-appwin-dots i{width:9px;height:9px;border-radius:50%;background:#CBD5E1;}
 #landing-screen .lp-appwin-url{
   flex:1;text-align:center;
   font-family:'GeistMono',ui-monospace,monospace;font-size:.6rem;letter-spacing:.04em;
-  color:#7C8CA6;background:rgba(255,255,255,.04);
-  border:1px solid rgba(148,180,222,.1);border-radius:6px;padding:.22rem .6rem;
+  color:#94A3B8;background:#FFFFFF;
+  border:1px solid #E7EAF0;border-radius:6px;padding:.22rem .6rem;
   max-width:210px;margin:0 auto;
 }
 #landing-screen .lp-appwin-sp{width:33px;flex-shrink:0;}
-/* Cuerpo: sidebar de iconos + área principal */
+/* Cuerpo: sidebar de iconos + area principal */
 #landing-screen .lp-appwin-body{display:flex;min-height:0;}
 #landing-screen .lp-appwin-side{
   display:flex;flex-direction:column;align-items:center;gap:.85rem;
-  padding:.85rem .55rem;border-right:1px solid rgba(148,180,222,.1);
-  background:#081020;flex-shrink:0;
+  padding:.85rem .55rem;border-right:1px solid #EEF1F6;
+  background:#F8FAFC;flex-shrink:0;
 }
-#landing-screen .lp-appwin-logo{width:20px;height:20px;object-fit:contain;margin-bottom:.15rem;}
+#landing-screen .lp-appwin-logo{width:20px;height:20px;object-fit:contain;margin-bottom:.15rem;filter:brightness(0);}
 #landing-screen .lp-appwin-ic{
   width:28px;height:28px;border-radius:8px;
   display:flex;align-items:center;justify-content:center;
-  color:#5E7291;
+  color:#94A3B8;
 }
 #landing-screen .lp-appwin-ic svg{width:14px;height:14px;}
 #landing-screen .lp-appwin-ic.active{
-  color:#EDF3FC;background:rgba(255,255,255,.06);
-  box-shadow:inset 2px 0 0 #22C55E;
+  color:#2563EB;background:#EFF4FF;
+  box-shadow:inset 2px 0 0 #2563EB;
 }
 #landing-screen .lp-appwin-main{flex:1;min-width:0;padding:.95rem 1.05rem 1.05rem;}
 /* Cabecera de la vista */
 #landing-screen .lp-appwin-head{
   display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;
 }
-#landing-screen .lp-appwin-title{font-size:.92rem;font-weight:700;color:#F2F6FC;letter-spacing:-.01em;}
+#landing-screen .lp-appwin-title{font-size:.92rem;font-weight:700;color:#0F172A;letter-spacing:-.01em;}
 #landing-screen .lp-appwin-plan{
   font-family:'GeistMono',ui-monospace,monospace;font-size:.52rem;letter-spacing:.14em;
-  color:#8FA3C0;border:1px solid rgba(148,180,222,.2);border-radius:5px;padding:.16rem .45rem;
+  color:#64748B;border:1px solid #E2E8F0;border-radius:5px;padding:.16rem .45rem;
 }
-/* Métricas */
+/* Metricas */
 #landing-screen .lp-appwin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.65rem;}
 #landing-screen .lp-appwin-stat{
-  background:rgba(255,255,255,.025);border:1px solid rgba(148,180,222,.11);
-  border-radius:9px;padding:.55rem .6rem;min-width:0;
+  background:#FFFFFF;border:1px solid #E7EAF0;
+  border-radius:9px;padding:.55rem .6rem;min-width:0;box-shadow:0 1px 2px rgba(16,24,40,.04);
 }
 #landing-screen .lp-appwin-stat .k{
   display:block;font-family:'GeistMono',ui-monospace,monospace;font-size:.46rem;
-  letter-spacing:.11em;color:#67799A;margin-bottom:.28rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.11em;color:#94A3B8;margin-bottom:.28rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-#landing-screen .lp-appwin-stat .v{display:block;font-size:1.02rem;font-weight:700;color:#F2F6FC;letter-spacing:-.02em;line-height:1;}
-#landing-screen .lp-appwin-stat .v em{font-style:normal;font-size:.66rem;font-weight:500;color:#67799A;}
-#landing-screen .lp-appwin-stat .s{display:block;font-size:.54rem;color:#67799A;margin-top:.24rem;}
+#landing-screen .lp-appwin-stat .v{display:block;font-size:1.02rem;font-weight:700;color:#0F172A;letter-spacing:-.02em;line-height:1;}
+#landing-screen .lp-appwin-stat .v em{font-style:normal;font-size:.66rem;font-weight:500;color:#94A3B8;}
+#landing-screen .lp-appwin-stat .s{display:block;font-size:.54rem;color:#94A3B8;margin-top:.24rem;}
 /* Medidor de uso del plan */
 #landing-screen .lp-appwin-usage{
-  background:rgba(255,255,255,.025);border:1px solid rgba(148,180,222,.11);
-  border-radius:9px;padding:.55rem .65rem .6rem;margin-bottom:.65rem;
+  background:#FFFFFF;border:1px solid #E7EAF0;
+  border-radius:9px;padding:.55rem .65rem .6rem;margin-bottom:.65rem;box-shadow:0 1px 2px rgba(16,24,40,.04);
 }
 #landing-screen .lp-appwin-usage .u-top{
   display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.38rem;
 }
-#landing-screen .lp-appwin-usage .u-top span:first-child{font-size:.62rem;color:#AAB8CF;}
+#landing-screen .lp-appwin-usage .u-top span:first-child{font-size:.62rem;color:#475569;}
 #landing-screen .lp-appwin-usage .u-num{
-  font-family:'GeistMono',ui-monospace,monospace;font-size:.56rem;color:#8FA3C0;letter-spacing:.03em;
+  font-family:'GeistMono',ui-monospace,monospace;font-size:.56rem;color:#64748B;letter-spacing:.03em;
 }
-#landing-screen .lp-appwin-usage .u-bar{height:4px;border-radius:99px;background:rgba(148,180,222,.14);overflow:hidden;}
-#landing-screen .lp-appwin-usage .u-bar i{display:block;height:100%;border-radius:99px;background:#22C55E;}
+#landing-screen .lp-appwin-usage .u-bar{height:4px;border-radius:99px;background:#EAEEF5;overflow:hidden;}
+#landing-screen .lp-appwin-usage .u-bar i{display:block;height:100%;border-radius:99px;background:#2563EB;}
 /* Lista de automatizaciones */
 #landing-screen .lp-appwin-list{
-  border:1px solid rgba(148,180,222,.11);border-radius:9px;overflow:hidden;margin-bottom:.65rem;
+  border:1px solid #E7EAF0;border-radius:9px;overflow:hidden;margin-bottom:.65rem;
 }
 #landing-screen .lp-appwin-lhead,
 #landing-screen .lp-appwin-row{
@@ -1709,45 +1776,45 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 }
 #landing-screen .lp-appwin-lhead{
   font-family:'GeistMono',ui-monospace,monospace;font-size:.46rem;letter-spacing:.11em;
-  color:#67799A;background:rgba(255,255,255,.022);
-  border-bottom:1px solid rgba(148,180,222,.09);
+  color:#94A3B8;background:#F8FAFC;
+  border-bottom:1px solid #EEF1F6;
 }
 #landing-screen .lp-appwin-lhead span:nth-child(2),
 #landing-screen .lp-appwin-row .n{text-align:right;}
 #landing-screen .lp-appwin-lhead span:nth-child(3){text-align:right;}
-#landing-screen .lp-appwin-row{border-bottom:1px solid rgba(148,180,222,.07);}
+#landing-screen .lp-appwin-row{border-bottom:1px solid #F1F4F8;}
 #landing-screen .lp-appwin-row:last-child{border-bottom:none;}
 #landing-screen .lp-appwin-row .kw{
   font-family:'GeistMono',ui-monospace,monospace;font-size:.62rem;font-weight:700;
-  letter-spacing:.06em;color:#EDF3FC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.06em;color:#2563EB;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 #landing-screen .lp-appwin-row .n{
-  font-family:'GeistMono',ui-monospace,monospace;font-size:.6rem;color:#AAB8CF;
+  font-family:'GeistMono',ui-monospace,monospace;font-size:.6rem;color:#475569;
 }
 #landing-screen .lp-appwin-row .st{
   display:inline-flex;align-items:center;gap:.32rem;justify-self:end;
   font-size:.56rem;font-weight:600;border-radius:99px;padding:.14rem .5rem;
 }
 #landing-screen .lp-appwin-row .st i{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-#landing-screen .lp-appwin-row .st.on{color:#5FE08A;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.28);}
-#landing-screen .lp-appwin-row .st.on i{background:#22C55E;}
-#landing-screen .lp-appwin-row .st.off{color:#8FA3C0;background:rgba(148,180,222,.07);border:1px solid rgba(148,180,222,.18);}
-#landing-screen .lp-appwin-row .st.off i{background:#67799A;}
+#landing-screen .lp-appwin-row .st.on{color:#15803D;background:#ECFDF3;border:1px solid #BBF7D0;}
+#landing-screen .lp-appwin-row .st.on i{background:#16A34A;}
+#landing-screen .lp-appwin-row .st.off{color:#B45309;background:#FEF6E7;border:1px solid #FCE4B8;}
+#landing-screen .lp-appwin-row .st.off i{background:#D97706;}
 /* Actividad reciente */
 #landing-screen .lp-appwin-act .a-h{
   display:block;font-family:'GeistMono',ui-monospace,monospace;font-size:.46rem;
-  letter-spacing:.11em;color:#67799A;margin-bottom:.4rem;
+  letter-spacing:.11em;color:#94A3B8;margin-bottom:.4rem;
 }
 #landing-screen .lp-appwin-act .a-row{
   display:flex;align-items:baseline;gap:.45rem;
-  font-size:.62rem;color:#AAB8CF;line-height:1.45;padding:.18rem 0;
+  font-size:.62rem;color:#475569;line-height:1.45;padding:.18rem 0;
 }
-#landing-screen .lp-appwin-act .a-row b{color:#E7EDF7;font-weight:600;}
+#landing-screen .lp-appwin-act .a-row b{color:#0F172A;font-weight:600;}
 #landing-screen .lp-appwin-act .a-dot{
-  width:5px;height:5px;border-radius:50%;background:#22C55E;flex-shrink:0;
+  width:5px;height:5px;border-radius:50%;background:#16A34A;flex-shrink:0;
   position:relative;top:-1px;
 }
-#landing-screen .lp-appwin-act .a-t{margin-left:auto;font-family:'GeistMono',ui-monospace,monospace;font-size:.5rem;color:#67799A;white-space:nowrap;padding-left:.5rem;}
+#landing-screen .lp-appwin-act .a-t{margin-left:auto;font-family:'GeistMono',ui-monospace,monospace;font-size:.5rem;color:#94A3B8;white-space:nowrap;padding-left:.5rem;}
 
 @media (max-width:900px){
   #landing-screen .lp-appwin{max-width:520px;}
@@ -1787,7 +1854,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
   <div class="lp-wrap lp-hero-grid">
     <div>
       <span class="lp-eyebrow-hero">Bienvenido a WalkyChat</span>
-      <h1>Convierte comentarios<br><span class="hl">en entregas automáticas.</span></h1>
+      <h1>Convierte comentarios <span class="hl">en entregas automáticas.</span></h1>
       <p class="lp-hero-sub">Elige una palabra clave, escribe tu mensaje y WalkyChat entrega tu recurso por DM a cada persona que la comente. Sin que estés pendiente del teléfono.</p>
       <div class="lp-check-line">
         <span class="lp-check-badge-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M20 6L9 17l-5-5"/></svg></span>
@@ -2004,20 +2071,20 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     </div>
     <div class="lp-faq lp-rv">
       <details>
-        <summary>¿Cómo elige WalkyChat a quién responder?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <p>Nada. Solo escribe a quien comenta tu palabra exacta en los posts que tú elegiste. Los demás comentarios los ignora por completo, así que tu audiencia nunca recibe algo que no pidió.</p>
+        <summary>¿Cómo funciona WalkyChat?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p>Conectas tu cuenta, eliges la publicación que quieres automatizar, defines una palabra clave y el mensaje que recibirán quienes comenten esa palabra. WalkyChat detecta automáticamente los comentarios y envía la respuesta sin intervención manual.</p>
       </details>
       <details>
-        <summary>¿Puedo usar la misma palabra en varias publicaciones?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <p>Sí. Cada palabra clave funciona en hasta 6 publicaciones a la vez. ¿Subiste un post nuevo? Lo agregas en dos toques sin rehacer nada. Eso sí, cada publicación va con una sola palabra clave para que nunca se crucen.</p>
+        <summary>¿Qué necesito para empezar?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p>Solo necesitas una cuenta y conectar tu perfil compatible. En pocos minutos puedes crear tu primera automatización y dejarla funcionando.</p>
       </details>
       <details>
-        <summary>¿Qué pasa cuando llego al límite de mensajes de mi plan?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <p>Se pausa hasta el mes siguiente o hasta que subas de plan, sin cobros sorpresa. Verás cuánto te queda en tu panel en todo momento.</p>
+        <summary>¿Qué pasa si llego al límite de mi plan?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p>Cuando alcanzas el límite mensual, las automatizaciones se pausan automáticamente. Puedes esperar al siguiente ciclo o cambiar a un plan superior para seguir enviando mensajes.</p>
       </details>
       <details>
-        <summary>¿Ya funciona con Instagram?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <p>La conexión oficial con Instagram (vía Meta) está en desarrollo. Ya puedes crear tu cuenta, configurar tus automatizaciones y dejar todo listo para cuando se active.</p>
+        <summary>¿Puedo crear varias automatizaciones?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p>Sí. La cantidad de automatizaciones disponibles depende del plan que tengas contratado. Puedes administrarlas, editarlas, pausarlas o eliminarlas cuando quieras.</p>
       </details>
     </div>
   </div>
@@ -2149,7 +2216,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       <span>Auto.</span>
     </div>
     <div class="bottom-nav-fab" onclick="goToView('crear')">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#06150c" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
     </div>
     <div class="bottom-nav-item" data-view="analiticas" onclick="goToView('analiticas')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V10M12 19V4M20 19v-7"/></svg>
@@ -2372,6 +2439,28 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
             </div>
 
             <div class="field">
+              <div class="gate-block">
+                <div class="gate-head">
+                  <div>
+                    <div class="gate-title">Pedir seguir antes de entregar</div>
+                    <div class="gate-sub">Opcional · disponible en todos los planes</div>
+                  </div>
+                  <button type="button" class="switch" id="gate-switch" role="switch" aria-checked="false" aria-label="Activar pedir seguir antes de entregar" onclick="toggleFollowGate()"><span class="switch-knob"></span></button>
+                </div>
+                <div class="gate-body" id="gate-body" style="display:none;">
+                  <label class="field-label" for="gate-message" style="margin-top:0.2rem;">Mensaje de invitación</label>
+                  <input type="text" id="gate-message" maxlength="120" placeholder="Vi tu comentario 👀 Sígueme para recibirlo." oninput="onFollowGateInput()">
+                  <div class="field-hint"><span id="gate-count">0</span>/120 caracteres</div>
+                  <div class="gate-btn-preview">
+                    <span class="gate-btn-label">Botón que verá tu seguidor</span>
+                    <span class="gate-qr">Ya te seguí ✅</span>
+                  </div>
+                  <div class="field-hint gate-note">Tu seguidor solo toca ese botón para continuar; no escribe nada. Instagram no permite confirmar si de verdad te siguió, así que el toque del botón es lo que dispara la entrega — sin verificaciones falsas.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
               <label class="field-label">Mensaje directo</label>
               <textarea id="dm-message" maxlength="280" placeholder="Escribe el mensaje que recibirá por DM..." oninput="onMessageInput()"></textarea>
               <div class="field-hint"><span id="message-count">0</span>/280 caracteres</div>
@@ -2397,7 +2486,9 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
               <div class="summary-row"><span>Publicación</span><span style="font-weight:600;" id="summary-source">—</span></div>
               <div class="summary-row"><span>Palabra clave</span><span style="font-weight:700;color:var(--green-text);" id="summary-keyword">—</span></div>
               <div class="summary-row"><span>Respuesta al comentario</span><span style="font-weight:600;text-align:right;max-width:260px;" id="summary-reply">—</span></div>
+              <div class="summary-row" id="summary-gate-row" style="display:none;"><span>Pedir seguir</span><span style="font-weight:600;text-align:right;max-width:260px;" id="summary-gate">—</span></div>
               <div class="summary-row"><span>Mensaje directo</span><span style="font-weight:600;text-align:right;max-width:260px;" id="summary-message">—</span></div>
+              <div class="summary-row" id="summary-brand-row" style="display:none;"><span>Marca en mensajes</span><span style="font-weight:600;color:var(--text-3);">· Powered by WalkyChat</span></div>
             </div>
 
             <div class="form-footer">
@@ -2425,9 +2516,14 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
               <div class="prev-k">02 · RESPUESTA EN EL COMENTARIO</div>
               <div class="prev-body" id="preview-reply">¡Listo! Te lo acabo de enviar por DM 📩</div>
             </div>
+            <div class="prev-row" id="prev-gate-row" style="display:none;">
+              <div class="prev-k">03 · PIDE SEGUIR</div>
+              <div class="prev-dm" id="preview-gate">Vi tu comentario 👀 Sígueme para recibirlo.</div>
+              <div class="prev-qr-row"><span class="prev-qr">Ya te seguí ✅</span></div>
+            </div>
             <div class="prev-row">
-              <div class="prev-k">03 · MENSAJE DIRECTO</div>
-              <div class="prev-dm" id="preview-message">Escribe tu mensaje para verlo aquí</div>
+              <div class="prev-k" id="prev-dm-num">03 · MENSAJE DIRECTO</div>
+              <div class="prev-dm"><span id="preview-message">Escribe tu mensaje para verlo aquí</span><span class="brand-inline" id="preview-brand" style="display:none;"> · Powered by WalkyChat</span></div>
             </div>
           </div>
         </div>
@@ -2655,6 +2751,29 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
               </div>
               <div class="acc-usage-foot" id="acc-renewal">Plan Free · sin ciclo de renovación</div>
             </div>
+
+            <!-- Resumen de la cuenta (datos reales de Supabase Auth) -->
+            <div class="acc-sum-card">
+              <div class="acc-sum-head">RESUMEN</div>
+              <div class="acc-sum-list">
+                <div class="acc-sum-row">
+                  <span class="acc-sum-k">Miembro desde</span>
+                  <span class="acc-sum-v" id="acc-sum-since">—</span>
+                </div>
+                <div class="acc-sum-row">
+                  <span class="acc-sum-k">Estado</span>
+                  <span class="acc-sum-v"><span class="acc-sum-dot ok"></span><span id="acc-sum-status">Cuenta activa</span></span>
+                </div>
+                <div class="acc-sum-row">
+                  <span class="acc-sum-k">Correo</span>
+                  <span class="acc-sum-v" id="acc-sum-verified">—</span>
+                </div>
+                <div class="acc-sum-row">
+                  <span class="acc-sum-k">Último acceso</span>
+                  <span class="acc-sum-v" id="acc-sum-last">—</span>
+                </div>
+              </div>
+            </div>
           </aside>
 
         </div>
@@ -2744,15 +2863,27 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
   }
 
   /* ---------- Auth real (Supabase) ---------- */
+  /* Extrae del usuario de Auth los campos que mostramos en el Resumen de Cuenta.
+     Todos son datos reales de Supabase; si alguno no viene, queda null (no se inventa). */
+  function mapAuthUser(u){
+    if(!u) return null;
+    return {
+      id: u.id,
+      email: u.email,
+      emailConfirmedAt: u.email_confirmed_at || u.confirmed_at || null,
+      lastSignInAt: u.last_sign_in_at || null,
+      createdAt: u.created_at || null
+    };
+  }
   async function apiSignUp(email, password){
     const { data, error } = await sb.auth.signUp({ email: email, password: password });
     if(error) throw new Error(authErrorEs(error.message));
-    return data.user ? { id: data.user.id, email: data.user.email } : { email: email };
+    return data.user ? mapAuthUser(data.user) : { email: email };
   }
   async function apiSignIn(email, password){
     const { data, error } = await sb.auth.signInWithPassword({ email: email, password: password });
     if(error) throw new Error(authErrorEs(error.message));
-    return { id: data.user.id, email: data.user.email };
+    return mapAuthUser(data.user);
   }
 
   /* ---------- Lectura de datos reales desde Supabase ---------- */
@@ -2828,6 +2959,9 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       keyword: a.keyword,
       message: a.message,
       link: a.link || '',
+      comment_reply: a.comment_reply || '',
+      follow_gate: !!a.follow_gate,
+      follow_gate_message: a.follow_gate_message || '',
       postUrls: postsBy[a.id] || [],
       status: a.status,
       detected: detectedBy[a.id] || 0,
@@ -3183,6 +3317,9 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       document.getElementById('reply-count').textContent = savedReply.length;
     }
     applyReplyUI();
+    createState.followGate = !!a.follow_gate;
+    createState.followGateMessage = a.follow_gate_message || FOLLOW_GATE_DEFAULT;
+    applyFollowGateUI();
     onMessageInput();
   }
 
@@ -3293,6 +3430,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     document.getElementById('acc-kw-note').textContent = kwPct + '% usado';
     setUsageState(document.getElementById('acc-kw-fill'), kwPct);
     document.getElementById('acc-email').textContent = appState.user ? appState.user.email : '—';
+    renderAccountSummary();
 
     /* Sidebar */
     document.getElementById('sidebar-plan-name').textContent = 'Plan ' + appState.plan.name;
@@ -3308,6 +3446,51 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     el.classList.remove('is-warning', 'is-full');
     if(pct >= 100) el.classList.add('is-full');
     else if(pct >= 80) el.classList.add('is-warning');
+  }
+
+  /* Formatea un ISO como "10 jul 2026" (es). null si no hay fecha válida. */
+  function fmtDateEs(iso){
+    if(!iso) return null;
+    const d = new Date(iso);
+    if(isNaN(d.getTime())) return null;
+    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return d.getDate() + ' ' + meses[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  /* Tiempo relativo en español ("Hace 5 minutos", "Hace 2 días", o fecha si es viejo). */
+  function relTimeEs(iso){
+    if(!iso) return null;
+    const then = new Date(iso).getTime();
+    if(isNaN(then)) return null;
+    const s = Math.max(0, Math.floor((Date.now() - then) / 1000));
+    if(s < 60) return 'Hace unos segundos';
+    const m = Math.floor(s / 60);
+    if(m < 60) return 'Hace ' + m + (m === 1 ? ' minuto' : ' minutos');
+    const h = Math.floor(m / 60);
+    if(h < 24) return 'Hace ' + h + (h === 1 ? ' hora' : ' horas');
+    const d = Math.floor(h / 24);
+    if(d < 30) return 'Hace ' + d + (d === 1 ? ' día' : ' días');
+    return fmtDateEs(iso);
+  }
+  /* Resumen de cuenta: todo sale del usuario real de Supabase Auth.
+     Si un dato no viene, se muestra "—" (nunca se inventa). */
+  function renderAccountSummary(){
+    const u = appState.user || {};
+    const sinceEl = document.getElementById('acc-sum-since');
+    if(sinceEl) sinceEl.textContent = fmtDateEs(u.createdAt) || '—';
+
+    const verEl = document.getElementById('acc-sum-verified');
+    if(verEl){
+      const verified = !!u.emailConfirmedAt;
+      verEl.innerHTML = '';
+      const dot = document.createElement('span');
+      dot.className = 'acc-sum-dot' + (verified ? ' ok' : '');
+      const txt = document.createElement('span');
+      txt.textContent = verified ? 'Verificado' : 'Sin verificar';
+      verEl.appendChild(dot); verEl.appendChild(txt);
+    }
+
+    const lastEl = document.getElementById('acc-sum-last');
+    if(lastEl) lastEl.textContent = relTimeEs(u.lastSignInAt) || '—';
   }
 
   /* Renovación del ciclo: fecha exacta un mes después del ancla (created_at),
@@ -3642,21 +3825,12 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 
 
   /* ===================== INIT ===================== */
-  (async function init(){
-    const { data } = await sb.auth.getSession();
-    if(data && data.session && data.session.user){
-      /* Sesión activa: saltar la landing, ir directo a la app */
-      hideLanding();
-      appState.user = { id: data.session.user.id, email: data.session.user.email };
-      await enterApp();
-    } else {
-      /* Visitante nuevo: mostrar la landing primero (el login está oculto detrás) */
-      showLanding();
-    }
-    document.getElementById('auth-password').addEventListener('keydown', e => {
-      if(e.key === 'Enter') submitAuth(document.getElementById('auth-submit'));
-    });
-  })();
+  /* El arranque (init) se ejecuta al final del bloque de control landing<->app,
+     para garantizar que hideLanding/showLanding ya estén definidos cuando la
+     sesión se resuelve. Si init se define aquí y getSession() resuelve muy
+     rápido (sesión en caché), su continuación puede correr antes de que ese
+     bloque cargue → ReferenceError → arranque abortado → el usuario queda en la
+     landing pública. Por eso init vive junto a hideLanding/showLanding. */
 
   /* ===================== FLUJO DE CREACIÓN ===================== */
   const REPLY_PRESETS = [
@@ -3664,20 +3838,27 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     '¡Ya lo tienes! Revisa tus mensajes ✅',
     'Entregado ✓ Mira tu bandeja de DM'
   ];
+  /* Paso opcional "pedir seguir": mensaje de invitación por defecto. El botón
+     de respuesta rápida "Ya te seguí ✅" es fijo (así el seguidor solo toca). */
+  const FOLLOW_GATE_DEFAULT = 'Vi tu comentario 👀 Sígueme para recibirlo.';
+  const FOLLOW_GATE_BUTTON = 'Ya te seguí ✅';
   let createState = {
     postUrls: [],       /* [{url, type}] — máx 6, únicos globalmente */
     keyword: '',
     message: '',
     link: '',
     commentReply: REPLY_PRESETS[0],
-    replyMode: 0        /* 0-2 = preset, 3 = personalizada */
+    replyMode: 0,       /* 0-2 = preset, 3 = personalizada */
+    followGate: false,  /* paso opcional "pedir seguir antes de entregar" */
+    followGateMessage: FOLLOW_GATE_DEFAULT
   };
   const MAX_POSTS = 6;
   let editingPostIndex = null;  /* índice del enlace en edición, o null */
 
   function resetCreateFlow(){
-    createState = { postUrls: [], keyword: '', message: '', link: '', commentReply: REPLY_PRESETS[0], replyMode: 0 };
+    createState = { postUrls: [], keyword: '', message: '', link: '', commentReply: REPLY_PRESETS[0], replyMode: 0, followGate: false, followGateMessage: FOLLOW_GATE_DEFAULT };
     applyReplyUI();
+    applyFollowGateUI();
     editingId = null;
     editingPostIndex = null;
     document.getElementById('post-url-input').value = '';
@@ -3690,6 +3871,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     document.getElementById('message-count').textContent = '0';
     document.getElementById('preview-keyword').textContent = 'GUIA';
     document.getElementById('preview-message').textContent = 'Escribe tu mensaje para verlo aquí';
+    updateBrandMark();
     document.getElementById('btn-step1').disabled = true;
     document.getElementById('btn-step2').disabled = true;
     document.getElementById('btn-step3').disabled = true;
@@ -3875,6 +4057,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       preview = textarea.value + ' ' + createState.link;
     }
     document.getElementById('preview-message').textContent = preview;
+    updateBrandMark();
 
     validateStep3();
   }
@@ -3914,6 +4097,55 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     }
   }
 
+  /* --- Paso opcional: pedir seguir antes de entregar --- */
+  function toggleFollowGate(){
+    createState.followGate = !createState.followGate;
+    applyFollowGateUI();
+    if(createState.followGate){
+      const input = document.getElementById('gate-message');
+      if(input) input.focus();
+    }
+  }
+  function onFollowGateInput(){
+    const input = document.getElementById('gate-message');
+    createState.followGateMessage = input.value;
+    document.getElementById('gate-count').textContent = input.value.length;
+    updateGatePreview();
+  }
+  function applyFollowGateUI(){
+    const on = !!createState.followGate;
+    const sw = document.getElementById('gate-switch');
+    if(sw) sw.setAttribute('aria-checked', on ? 'true' : 'false');
+    const body = document.getElementById('gate-body');
+    if(body) body.style.display = on ? 'block' : 'none';
+    const input = document.getElementById('gate-message');
+    if(input){
+      input.value = createState.followGateMessage || '';
+      const cnt = document.getElementById('gate-count');
+      if(cnt) cnt.textContent = (createState.followGateMessage || '').length;
+    }
+    updateGatePreview();
+  }
+  /* Refleja el paso "pide seguir" en la vista previa y renumera el DM (03→04). */
+  function updateGatePreview(){
+    const on = !!createState.followGate;
+    const row = document.getElementById('prev-gate-row');
+    if(row) row.style.display = on ? 'block' : 'none';
+    const g = document.getElementById('preview-gate');
+    if(g) g.textContent = (createState.followGateMessage && createState.followGateMessage.trim())
+        ? createState.followGateMessage : FOLLOW_GATE_DEFAULT;
+    const dmNum = document.getElementById('prev-dm-num');
+    if(dmNum) dmNum.textContent = (on ? '04' : '03') + ' · MENSAJE DIRECTO';
+  }
+  /* Marca discreta del plan Free en los mensajes ("· Powered by WalkyChat").
+     Automática por plan: Free la lleva por defecto; Pro y Max no. */
+  function updateBrandMark(){
+    const brand = document.getElementById('preview-brand');
+    if(!brand) return;
+    const isFree = !appState.plan || appState.plan.name === 'Free';
+    brand.style.display = isFree ? 'inline' : 'none';
+  }
+
   /* Continuar exige mensaje de DM y, si la respuesta es personalizada, que no esté vacía */
   function validateStep3(){
     const msgOk = document.getElementById('dm-message').value.trim().length > 0;
@@ -3938,6 +4170,15 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     document.getElementById('summary-source').textContent = sourceText;
     document.getElementById('summary-keyword').textContent = createState.keyword;
     document.getElementById('summary-reply').textContent = createState.commentReply;
+    const gateRow = document.getElementById('summary-gate-row');
+    if(createState.followGate){
+      gateRow.style.display = '';
+      document.getElementById('summary-gate').textContent = createState.followGateMessage || FOLLOW_GATE_DEFAULT;
+    } else {
+      gateRow.style.display = 'none';
+    }
+    const isFree = !appState.plan || appState.plan.name === 'Free';
+    document.getElementById('summary-brand-row').style.display = isFree ? '' : 'none';
     document.getElementById('summary-message').textContent = createState.link
       ? createState.message + ' ' + createState.link
       : createState.message;
@@ -3979,7 +4220,9 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       keyword: createState.keyword,
       message: createState.message,
       link: createState.link || null,
-      comment_reply: createState.commentReply
+      comment_reply: createState.commentReply,
+      follow_gate: !!createState.followGate,
+      follow_gate_message: createState.followGate ? (createState.followGateMessage || FOLLOW_GATE_DEFAULT) : null
     };
 
     let automationId = editingId;
@@ -3993,12 +4236,23 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       return { error: res.error, id: res.data ? res.data.id : null };
     }
     let saved = await saveRow(row);
-    /* Si la columna comment_reply aún no existe en la BD, guardar sin ella y avisar */
-    if(saved.error && /comment_reply/i.test(saved.error.message || '')){
-      const rowLegacy = Object.assign({}, row);
-      delete rowLegacy.comment_reply;
-      saved = await saveRow(rowLegacy);
-      if(!saved.error) showToast('Guardado, pero falta la migración de "respuesta al comentario" en la base de datos.', 'error');
+    /* Si alguna columna opcional aún no existe en la BD (migración pendiente),
+       la quitamos y reintentamos. Cubre comment_reply y el paso "pedir seguir".
+       Se listan de más específica a más general para no borrar de más. */
+    const OPTIONAL_COLS = ['follow_gate_message', 'follow_gate', 'comment_reply'];
+    const stripped = [];
+    let guard = 0;
+    while(saved.error && guard < OPTIONAL_COLS.length){
+      guard++;
+      const msg = saved.error.message || '';
+      const missing = OPTIONAL_COLS.find(c => (c in row) && new RegExp('\\b' + c + '\\b', 'i').test(msg));
+      if(!missing) break;
+      delete row[missing];
+      stripped.push(missing);
+      saved = await saveRow(row);
+    }
+    if(!saved.error && stripped.length){
+      showToast('Guardado, pero falta migrar en la base de datos: ' + stripped.join(', ') + '.', 'error');
     }
     error = saved.error;
     if(saved.id) automationId = saved.id;
@@ -4085,7 +4339,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     try{
       var res = await sb.auth.getSession();
       if(res && res.data && res.data.session && res.data.session.user){
-        appState.user = { id: res.data.session.user.id, email: res.data.session.user.email };
+        appState.user = mapAuthUser(res.data.session.user);
         await enterApp();
         return;
       }
@@ -4143,6 +4397,56 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       });
     }, { root: root, threshold: 0.12 });
     els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ===================== INIT (arranque) ===================== */
+  /* Se ejecuta aquí, al final, cuando hideLanding/showLanding/enterAppFromLanding
+     ya están definidos (y todas las funciones del bloque anterior también). Así
+     el arranque nunca falla por orden de carga, sin importar qué tan rápido
+     resuelva getSession(). */
+
+  /* Refuerzo: si en cualquier momento hay una sesión válida (al recargar o al
+     refrescarse el token), la landing pública se mantiene oculta. Nunca saca al
+     usuario de la app —el cierre de sesión se maneja de forma explícita—, así
+     que su único efecto es evitar que un usuario autenticado vea la landing. */
+  sb.auth.onAuthStateChange(function(event, session){
+    if(session && session.user) hideLanding();
+  });
+
+  (async function init(){
+    /* Ocultamos la landing ANTES de resolver la sesión: al recargar, un usuario
+       autenticado nunca debe ver (ni "aterrizar" en) la landing pública. Solo se
+       mostrará si se confirma que no hay sesión. */
+    hideLanding();
+
+    var session = null;
+    try {
+      var res = await sb.auth.getSession();
+      session = (res && res.data && res.data.session && res.data.session.user) ? res.data.session : null;
+    } catch(e){
+      session = null;
+    }
+
+    if(session){
+      /* Sesión activa: entrar directo a la app. Un fallo transitorio al cargar
+         datos no debe devolver al usuario a la landing; se muestra la app igual
+         y los datos se reintentan al navegar. */
+      appState.user = mapAuthUser(session.user);
+      try {
+        await enterApp();
+      } catch(e){
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('app-root').style.display = '';
+        goToView('inicio');
+      }
+    } else {
+      /* Visitante sin sesión: mostrar la landing. */
+      showLanding();
+    }
+    var pw = document.getElementById('auth-password');
+    if(pw) pw.addEventListener('keydown', function(e){
+      if(e.key === 'Enter') submitAuth(document.getElementById('auth-submit'));
+    });
   })();
 </script>
 </body>
