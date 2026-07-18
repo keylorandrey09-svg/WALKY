@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WalkyChat — Panel</title>
+<title>WalkyChat — Convierte comentarios de Instagram en entregas automáticas</title>
+<meta name="description" content="WalkyChat entrega tu recurso por DM a cada persona que comenta tu palabra clave en Instagram. Elige la palabra, escribe el mensaje y se manda solo. Desde $0/mes.">
+<meta name="theme-color" content="#1E2E4F">
+<link rel="canonical" href="https://walky-rggq.vercel.app/">
+<!-- Vista previa al compartir el enlace (WhatsApp, Instagram, X…) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WalkyChat">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="WalkyChat — Convierte comentarios en entregas automáticas">
+<meta property="og:description" content="Elige una palabra clave, escribe tu mensaje y WalkyChat entrega tu recurso por DM a cada persona que la comente.">
+<meta property="og:url" content="https://walky-rggq.vercel.app/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WalkyChat — Convierte comentarios en entregas automáticas">
+<meta name="twitter:description" content="Elige una palabra clave, escribe tu mensaje y WalkyChat entrega tu recurso por DM a cada persona que la comente.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -2106,7 +2119,8 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 #landing-screen .lp-faq details p{padding:0 .25rem 1.25rem;font-size:.9rem;line-height:1.7;color:var(--lp-ink-2);max-width:64ch;}
 
 /* legal (tarjetas) */
-#landing-screen .lp-legal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+#landing-screen .lp-legal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+@media (max-width:1000px){#landing-screen .lp-legal-grid{grid-template-columns:repeat(2,1fr);}}
 #landing-screen .lp-doc{display:flex;flex-direction:column;gap:.5rem;padding:1.45rem 1.4rem 1.5rem;}
 #landing-screen .lp-doc-k{color:var(--lp-ink-3);}
 #landing-screen .lp-doc h3{font-size:.99rem;font-weight:600;letter-spacing:-.014em;color:var(--lp-ink);}
@@ -2145,6 +2159,16 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 #landing-screen .lp-footer .lp-logo{color:#fff;}
 #landing-screen .lp-footer-in{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:2rem;align-items:start;}
 #landing-screen .lp-footer-brand p{font-size:.82rem;line-height:1.65;max-width:30ch;margin-top:.9rem;color:var(--lp-on-dark-3);}
+/* Datos de soporte visibles en todas las pantallas: es lo que pide el manual
+   del vendedor de Paddle, junto con el nombre legal del autonomo.
+   Sin telefono a proposito: su manual lo pide, pero Paddle mismo no tiene
+   linea telefonica y publicar un movil personal no se deshace. Si el revisor
+   lo reclama, se anade aqui una linea <a href="tel:..."> y listo. */
+#landing-screen .lp-footer-contact{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;margin-top:1.3rem;}
+#landing-screen .lp-footer-contact > span:first-child{color:var(--lp-on-dark-3);}
+#landing-screen .lp-footer-contact a{font-size:.84rem;color:var(--lp-on-dark-2);transition:color .18s var(--lp-ease);}
+#landing-screen .lp-footer-contact a:hover{color:#fff;}
+#landing-screen .lp-footer-legal-name{font-size:.75rem;color:var(--lp-on-dark-3);line-height:1.5;margin-top:.3rem;}
 #landing-screen .lp-footer-col{display:flex;flex-direction:column;align-items:flex-start;gap:.62rem;}
 #landing-screen .lp-footer-col > span{color:var(--lp-on-dark-3);margin-bottom:.25rem;}
 #landing-screen .lp-footer-col a{
@@ -2433,9 +2457,10 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 (function(){
   var t = 'system';
   try{ t = localStorage.getItem('wc-theme') || 'system'; }catch(e){}
-  var dark = t === 'dark' || (t === 'system' &&
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  /* "system" = el aspecto por defecto de WalkyChat, que es claro. No sigue a
+     prefers-color-scheme por decisión de producto: la identidad de la app es
+     clara y el oscuro se elige a mano. */
+  document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
 })();
 </script>
 </head>
@@ -2552,7 +2577,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
         </div>
         <div class="lp-strip-cell">
           <span class="lp-mono lp-strip-k">Palabra clave</span>
-          <span class="lp-strip-v">Hasta 7 letras, la eliges tú</span>
+          <span class="lp-strip-v">Hasta 11 caracteres, la eliges tú</span>
         </div>
         <div class="lp-strip-cell">
           <span class="lp-mono lp-strip-k">Publicaciones</span>
@@ -2608,7 +2633,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
         <span class="lp-cap-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h10M7 12h6"/><path d="M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4-.84L3 20l1.1-3.3A7.48 7.48 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></span>
         <div>
           <h3>Responde solo a quien debe</h3>
-          <p>Palabras de hasta 7 letras: fáciles de comentar para tu audiencia y sin que un comentario cualquiera dispare un envío por error.</p>
+          <p>Palabras o emojis de hasta 11 caracteres: fáciles de comentar para tu audiencia y sin que un comentario cualquiera dispare un envío por error.</p>
         </div>
       </div>
       <div class="lp-card lp-cap lp-rv">
@@ -2769,8 +2794,14 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
         <p>Qué te damos, qué esperamos de ti, cómo funcionan los planes y qué pasa si algo se rompe.</p>
         <span class="lp-doc-go">Leer<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="lp-card lp-doc lp-rv" href="#legal/datos" onclick="openLegal(event,'datos')">
+      <a class="lp-card lp-doc lp-rv" href="#legal/reembolsos" onclick="openLegal(event,'reembolsos')">
         <span class="lp-mono lp-doc-k">Documento 03</span>
+        <h3>Política de reembolsos</h3>
+        <p>Cuándo devolvemos tu dinero, cómo pedirlo y en cuánto tiempo lo tienes de vuelta.</p>
+        <span class="lp-doc-go">Leer<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="lp-card lp-doc lp-rv" href="#legal/datos" onclick="openLegal(event,'datos')">
+        <span class="lp-mono lp-doc-k">Documento 04</span>
         <h3>Eliminación de datos</h3>
         <p>Cómo desconectar Instagram y cómo borrar tu cuenta y todo su historial, paso a paso.</p>
         <span class="lp-doc-go">Leer<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
@@ -2813,6 +2844,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
           <span class="lp-mono">Documentos</span>
           <a href="#legal/privacidad" data-doc="privacidad">Política de Privacidad</a>
           <a href="#legal/terminos" data-doc="terminos">Términos del Servicio</a>
+          <a href="#legal/reembolsos" data-doc="reembolsos">Política de reembolsos</a>
           <a href="#legal/datos" data-doc="datos">Eliminación de datos</a>
           <a href="#legal/cookies" data-doc="cookies">Cookies y almacenamiento</a>
           <p class="lp-legal-meta">¿Alguna duda sobre estos documentos? Escríbenos a <a href="mailto:walkychat.2026@gmail.com">walkychat.2026@gmail.com</a>.</p>
@@ -3080,9 +3112,77 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
             </div>
           </article>
 
+          <!-- ---------- REEMBOLSOS ---------- -->
+          <article class="lp-doc-art" id="legal-reembolsos">
+            <span class="lp-mono">Documento 03</span>
+            <h2>Política de reembolsos</h2>
+            <p class="lp-doc-date">Última actualización: 15 de julio de 2026</p>
+            <p class="lp-doc-lead">Antes de pagar puedes probar WalkyChat gratis todo el tiempo que quieras, así que no deberías llegar aquí por sorpresa. Aun así, esto es lo que pasa si quieres tu dinero de vuelta.</p>
+
+            <div class="lp-clause">
+              <span class="lp-clause-n">01</span>
+              <div>
+                <h3>Prueba antes de pagar</h3>
+                <p>El plan Free no caduca y no pide tarjeta. Puedes crear tus automatizaciones, ver cómo funciona y decidir con calma. Solo pagas cuando necesitas más volumen del que da el plan gratuito.</p>
+              </div>
+            </div>
+
+            <div class="lp-clause">
+              <span class="lp-clause-n">02</span>
+              <div>
+                <h3>Cancelar en cualquier momento</h3>
+                <p>Puedes cancelar tu suscripción cuando quieras, sin dar explicaciones y sin penalización. La cancelación surte efecto <b>al final del ciclo que ya pagaste</b>: conservas el plan y sus límites hasta ese día, y no se te vuelve a cobrar.</p>
+                <p>Cancelar no devuelve el importe del ciclo en curso, porque el servicio siguió disponible para ti durante ese periodo.</p>
+              </div>
+            </div>
+
+            <div class="lp-clause">
+              <span class="lp-clause-n">03</span>
+              <div>
+                <h3>Cuándo sí devolvemos el dinero</h3>
+                <p>Sin discutir y sin letra pequeña, en estos casos:</p>
+                <ul>
+                  <li><b>Te cobramos por error</b>: un cargo duplicado, un cobro después de cancelar, o un plan que no contrataste.</li>
+                  <li><b>El servicio no funcionó</b>: si WalkyChat no entregó tus mensajes por un fallo nuestro durante una parte significativa del ciclo.</li>
+                  <li><b>Pagaste y no llegaste a usarlo</b>: si nos escribes dentro de los primeros 14 días y no consumiste una parte relevante de tu límite mensual.</li>
+                </ul>
+                <p>Si tu caso no encaja exactamente pero crees que tienes razón, escríbenos igual. Preferimos devolverte el dinero antes que tenerte descontento.</p>
+              </div>
+            </div>
+
+            <div class="lp-clause">
+              <span class="lp-clause-n">04</span>
+              <div>
+                <h3>Cómo pedirlo</h3>
+                <p>Por cualquiera de estas dos vías:</p>
+                <ul>
+                  <li>Escríbenos a <a href="mailto:walkychat.2026@gmail.com">walkychat.2026@gmail.com</a> desde el correo de tu cuenta, diciendo qué pasó.</li>
+                  <li>O directamente a Paddle en <a href="https://paddle.net" target="_blank" rel="noopener noreferrer">paddle.net</a>, que es quien procesó tu pago.</li>
+                </ul>
+                <p>Respondemos a las peticiones de reembolso en un plazo máximo de 5 días hábiles.</p>
+              </div>
+            </div>
+
+            <div class="lp-clause">
+              <span class="lp-clause-n">05</span>
+              <div>
+                <h3>Quién ejecuta la devolución</h3>
+                <p>El pago lo cobró <b>Paddle</b> (Paddle.com Market Ltd, Reino Unido) como comerciante registrado, así que es Paddle quien emite la devolución. El dinero vuelve al mismo método de pago con el que pagaste. El tiempo que tarde en aparecer en tu extracto depende de tu banco, no de nosotros: suele ser de 3 a 10 días hábiles.</p>
+              </div>
+            </div>
+
+            <div class="lp-clause">
+              <span class="lp-clause-n">06</span>
+              <div>
+                <h3>Tus derechos como consumidor</h3>
+                <p>Esta política <b>no recorta</b> los derechos que la ley te dé en tu país de residencia. Si tu legislación te concede un derecho de desistimiento o de reembolso más amplio que lo que dice este documento, ese derecho prevalece.</p>
+              </div>
+            </div>
+          </article>
+
           <!-- ---------- ELIMINACIÓN DE DATOS ---------- -->
           <article class="lp-doc-art" id="legal-datos">
-            <span class="lp-mono">Documento 03</span>
+            <span class="lp-mono">Documento 04</span>
             <h2>Eliminación de datos</h2>
             <p class="lp-doc-date">Última actualización: 15 de julio de 2026</p>
             <p class="lp-doc-lead">Borrar tus datos de WalkyChat no requiere pedir permiso a nadie. Tienes tres formas de hacerlo, según lo que quieras eliminar.</p>
@@ -3129,7 +3229,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 
           <!-- ---------- COOKIES ---------- -->
           <article class="lp-doc-art" id="legal-cookies">
-            <span class="lp-mono">Documento 04</span>
+            <span class="lp-mono">Documento 05</span>
             <h2>Cookies y almacenamiento</h2>
             <p class="lp-doc-date">Última actualización: 15 de julio de 2026</p>
             <p class="lp-doc-lead">WalkyChat usa el almacenamiento de tu navegador para una sola cosa: recordar que has iniciado sesión.</p>
@@ -3181,6 +3281,11 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       <div class="lp-footer-brand">
         <a class="lp-logo" href="#" onclick="closeLegal(event)"><img class="lp-logo-img" src="data:image/png;base64,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" alt=""><span class="lp-word" role="img" aria-label="WalkyChat"></span></a>
         <p>La forma más simple de entregar tu contenido a quien lo pide en tus comentarios de Instagram.</p>
+        <div class="lp-footer-contact">
+          <span class="lp-mono">Soporte</span>
+          <a href="mailto:walkychat.2026@gmail.com">walkychat.2026@gmail.com</a>
+          <span class="lp-footer-legal-name">Servicio operado por Keylor Vega Sancho · Costa Rica</span>
+        </div>
       </div>
       <div class="lp-footer-col">
         <span class="lp-mono">Producto</span>
@@ -3193,6 +3298,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
         <span class="lp-mono">Legal</span>
         <a href="#legal/privacidad" onclick="openLegal(event,'privacidad')">Privacidad</a>
         <a href="#legal/terminos" onclick="openLegal(event,'terminos')">Términos</a>
+        <a href="#legal/reembolsos" onclick="openLegal(event,'reembolsos')">Reembolsos</a>
         <a href="#legal/datos" onclick="openLegal(event,'datos')">Eliminación de datos</a>
         <a href="#legal/cookies" onclick="openLegal(event,'cookies')">Cookies</a>
       </div>
@@ -3626,9 +3732,9 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 
             <div class="field">
               <div class="keyword-input-row">
-                <input type="text" id="keyword-input" maxlength="7" placeholder="Máx. 7 letras (ej: GUIA)" style="flex:1;min-width:200px;text-transform:uppercase;" oninput="onKeywordInput(this)">
+                <input type="text" id="keyword-input" placeholder="Máx. 11 caracteres (ej: GUIA o 🔥)" style="flex:1;min-width:200px;" oninput="onKeywordInput(this)">
               </div>
-              <div class="field-hint"><span id="keyword-count">0</span>/7 letras</div>
+              <div class="field-hint"><span id="keyword-count">0</span>/11 caracteres</div>
             </div>
 
             <div class="form-footer">
@@ -3998,19 +4104,15 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
             </div>
             <div class="acc-line acc-line-theme">
               <span class="acc-line-label">Tema</span>
-              <span class="acc-line-value acc-theme-desc">Se guarda en este dispositivo. <span id="theme-sys-hint" style="display:none;">Ahora mismo sigue a tu sistema.</span></span>
+              <span class="acc-line-value acc-theme-desc">Se guarda en este dispositivo.</span>
               <div class="seg" role="radiogroup" aria-label="Tema de la interfaz">
-                <button type="button" class="seg-opt" role="radio" aria-checked="false" data-theme-opt="light" onclick="setTheme('light')">
+                <button type="button" class="seg-opt" role="radio" aria-checked="false" data-theme-opt="system" onclick="setTheme('system')">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-                  Claro
+                  Predeterminado
                 </button>
                 <button type="button" class="seg-opt" role="radio" aria-checked="false" data-theme-opt="dark" onclick="setTheme('dark')">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
                   Oscuro
-                </button>
-                <button type="button" class="seg-opt" role="radio" aria-checked="false" data-theme-opt="system" onclick="setTheme('system')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                  Sistema
                 </button>
               </div>
             </div>
@@ -4293,9 +4395,18 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     }
     appState.planSince = prof ? (prof.plan_started_at || prof.created_at || null) : null;
     appState.notificationsSeenAt = prof ? (prof.notifications_seen_at || null) : null;
+    /* El precio para mostrar sale de PLANS, no de la base.
+       profiles.plan_price es NUMERIC (guarda 19.99), pero la interfaz pinta
+       "Plan — $19.99/mes". Leerlo directo daba dos fallos: en Pro salía
+       "Pro — 19.99", y en Free el 0 es falsy, así que caía al fallback y
+       acertaba por casualidad. La base guarda el dato; PLANS lo formatea. */
+    function precioVisible(nombre){
+      const p = PLANS.find(x => x.name === nombre);
+      return p ? (p.price + p.period) : PLAN_FALLBACK.price;
+    }
     appState.plan = prof ? {
       name: prof.plan_name || PLAN_FALLBACK.name,
-      price: prof.plan_price || PLAN_FALLBACK.price,
+      price: precioVisible(prof.plan_name || PLAN_FALLBACK.name),
       msgLimit: prof.msg_limit || PLAN_FALLBACK.msgLimit,
       kwLimit: prof.kw_limit || PLAN_FALLBACK.kwLimit
     } : {
@@ -5062,7 +5173,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     box.innerHTML = appState.automations.slice(0, 3).map(a =>
       '<div class="automation-row" data-automation-id="' + a.id + '">' +
         '<div class="automation-left">' +
-          '<div class="automation-thumb">' + ((a.keyword||'?').trim().charAt(0)||'#').toUpperCase() + '</div>' +
+          '<div class="automation-thumb">' + inicialAvatar(a.keyword) + '</div>' +
           '<div>' +
             '<div class="automation-name">' + a.name + '</div>' +
             '<div class="automation-keyword">Se activa con: <span>' + a.keyword + '</span></div>' +
@@ -5531,7 +5642,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       '<div class="automation-card ' + (a.status === 'paused' ? 'paused' : '') + (openPostPanels.has(a.id) ? ' posts-open' : '') + '" data-automation-id="' + a.id + '">' +
         '<div class="ac-grid">' +
           '<div class="ac-col-info">' +
-            '<div class="automation-thumb">' + ((a.keyword||'?').trim().charAt(0)||'#').toUpperCase() + '</div>' +
+            '<div class="automation-thumb">' + inicialAvatar(a.keyword) + '</div>' +
             '<div class="ac-info">' +
               '<div class="automation-name">' + a.name + '</div>' +
               '<div class="ac-meta"><span class="ac-keyword-tag">' + a.keyword + '</span><span class="ac-post-tag" onclick="toggleAutoPosts(\'' + a.id + '\')" title="Ver publicaciones vinculadas">' + ((a.postUrls || []).length === 1 ? '1 publicación vinculada' : (a.postUrls || []).length + ' publicaciones vinculadas') + '<span class="chev">▾</span></span></div>' +
@@ -5874,12 +5985,47 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     document.getElementById('btn-step1').disabled = createState.postUrls.length === 0;
   }
 
+  /* Cuenta caracteres VISIBLES, no unidades de código. "🔥".length es 2 y una
+     familia 👨‍👩‍👧 es 8, así que .slice() partiría emojis por la mitad. El
+     Segmenter agrupa cada emoji (aunque lleve modificadores) como un carácter. */
+  var _seg = (typeof Intl !== 'undefined' && Intl.Segmenter)
+    ? new Intl.Segmenter('es', { granularity: 'grapheme' })
+    : null;
+  function graphemes(str){
+    if(_seg) return Array.from(_seg.segment(str), s => s.segment);
+    return Array.from(str); // repliegue: Array.from ya respeta pares surrogate
+  }
+  var KEYWORD_MAX = 11;
+
+  /* Inicial para el avatar de una automatización. Respeta emojis: si la
+     palabra empieza por 🔥, devuelve 🔥 entero, no medio carácter roto. */
+  function inicialAvatar(kw){
+    var g = graphemes((kw || '?').trim());
+    if(!g.length) return '#';
+    return g[0].toLocaleUpperCase('es');
+  }
+
   function onKeywordInput(input){
-    input.value = input.value.toUpperCase().slice(0, 7);
+    /* No forzamos mayúsculas: un emoji no tiene mayúscula y toUpperCase() lo
+       dejaba intacto pero rompía la simetría. El match se hace insensible a
+       caso en la comparación (normKeyword), no aquí. */
+    var visibles = graphemes(input.value);
+    if(visibles.length > KEYWORD_MAX){
+      input.value = visibles.slice(0, KEYWORD_MAX).join('');
+      visibles = graphemes(input.value);
+    }
     createState.keyword = input.value;
-    document.getElementById('keyword-count').textContent = input.value.length;
+    document.getElementById('keyword-count').textContent = visibles.length;
     document.getElementById('preview-keyword').textContent = input.value || 'PALABRA';
     document.getElementById('btn-step2').disabled = input.value.trim().length === 0;
+  }
+
+  /* Normaliza para comparar la palabra clave con el comentario del seguidor:
+     minúsculas (así GUÍA = guía = Guia) pero los emojis quedan exactos. */
+  function normKeyword(str){
+    return graphemes((str || '').trim()).map(function(g){
+      return g.toLocaleLowerCase('es');
+    }).join('');
   }
 
   function onMessageInput(){
@@ -6198,7 +6344,8 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
      rastreador que no ejecute JS igualmente los lee. Cada documento tiene su
      propia URL: #legal/privacidad, #legal/terminos, #legal/datos, #legal/cookies.
      Ninguna contiene "app", así que no interfiere con el arranque de la app. */
-  var LEGAL_DOCS = ['privacidad', 'terminos', 'datos', 'cookies'];
+  var LEGAL_DOCS = ['privacidad', 'terminos', 'reembolsos', 'datos', 'cookies'];
+  var TITULO_BASE = document.title;
 
   function legalHashDoc(){
     var h = '';
@@ -6259,7 +6406,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     }else{
       legal.hidden = true;
       main.hidden = false;
-      document.title = 'WalkyChat';
+      document.title = TITULO_BASE;
     }
   }
 
@@ -6410,36 +6557,33 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
    ================================================================== */
 (function(){
   var THEME_KEY = 'wc-theme';
-  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
+  /* Dos estados, no tres:
+       system -> el aspecto por defecto de WalkyChat, que es claro
+       dark   -> oscuro, elegido a mano
+     Ya no se sigue a prefers-color-scheme: es una decisión de producto, no un
+     olvido. Si algún día se recupera, hay que volver a distinguir "claro
+     forzado" de "seguir al SO", porque con dos estados no se pueden separar.
+     Las preferencias antiguas guardadas como 'light' siguen funcionando: caen
+     en claro igual que 'system'. */
   function readTheme(){
-    try{ return localStorage.getItem(THEME_KEY) || 'system'; }catch(e){ return 'system'; }
-  }
-  function resolve(pref){
-    if(pref === 'dark') return 'dark';
-    if(pref === 'light') return 'light';
-    return (mq && mq.matches) ? 'dark' : 'light';
+    try{
+      var v = localStorage.getItem(THEME_KEY);
+      return (v === 'dark') ? 'dark' : 'system';
+    }catch(e){ return 'system'; }
   }
   function paint(pref){
-    document.documentElement.setAttribute('data-theme', resolve(pref));
+    document.documentElement.setAttribute('data-theme', pref === 'dark' ? 'dark' : 'light');
     var opts = document.querySelectorAll('[data-theme-opt]');
     Array.prototype.forEach.call(opts, function(b){
       b.setAttribute('aria-checked', b.getAttribute('data-theme-opt') === pref ? 'true' : 'false');
     });
-    var hint = document.getElementById('theme-sys-hint');
-    if(hint) hint.style.display = (pref === 'system') ? 'inline' : 'none';
   }
   window.setTheme = function(pref){
-    if(['light','dark','system'].indexOf(pref) === -1) pref = 'system';
+    pref = (pref === 'dark') ? 'dark' : 'system';
     try{ localStorage.setItem(THEME_KEY, pref); }catch(e){}
     paint(pref);
   };
-  /* En "Sistema", seguir al SO en vivo y sin recargar. */
-  if(mq){
-    var onSys = function(){ if(readTheme() === 'system') paint('system'); };
-    if(mq.addEventListener) mq.addEventListener('change', onSys);
-    else if(mq.addListener) mq.addListener(onSys);
-  }
   paint(readTheme());
 })();
 </script>
