@@ -6510,6 +6510,21 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     return LEGAL_DOCS.indexOf(id) !== -1 ? id : null;
   }
 
+  /* Rutas limpias: /legal/privacidad, /legal/datos, etc. Es lo que los
+     formularios de Meta y Paddle esperan (URL que carga directo, sin #).
+     Vercel reescribe esas rutas a index.html (ver vercel.json). */
+  function legalPathDoc(){
+    var p = '';
+    try{ p = (location.pathname || ''); }catch(e){}
+    var m = p.match(/^\/legal\/([a-z]+)\/?$/i);
+    if(!m) return null;
+    var id = m[1].toLowerCase();
+    return LEGAL_DOCS.indexOf(id) !== -1 ? id : null;
+  }
+
+  /* La ruta manda; el hash queda como respaldo de enlaces antiguos (#legal/…). */
+  function legalCurrentDoc(){ return legalPathDoc() || legalHashDoc(); }
+
   function scrollLandingTo(top){
     var root = document.getElementById('landing-screen');
     if(!root) return;
@@ -6578,22 +6593,28 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
   function openLegal(ev, id){
     if(ev) ev.preventDefault();
     if(LEGAL_DOCS.indexOf(id) === -1) id = LEGAL_DOCS[0];
-    try{ location.hash = 'legal/' + id; }catch(e){}
+    try{ history.pushState(null, '', '/legal/' + id); }
+    catch(e){ try{ location.hash = 'legal/' + id; }catch(_){} }
     renderLegal(id);
     scrollToArticle(id);
   }
 
   function closeLegal(ev){
     if(ev) ev.preventDefault();
-    try{
-      if(legalHashDoc()) history.pushState(null, '', location.pathname + location.search);
-    }catch(e){
-      try{ location.hash = ''; }catch(_){}
-    }
+    try{ history.pushState(null, '', '/'); }
+    catch(e){ try{ location.hash = ''; }catch(_){} }
     renderLegal(null);
     scrollLandingTo(0);
     revealVisible();
   }
+
+  /* Navegar atrás/adelante con rutas limpias. */
+  window.addEventListener('popstate', function(){
+    var id = legalCurrentDoc();
+    if(id){ renderLegal(id); scrollToArticle(id); return; }
+    renderLegal(null);
+    revealVisible();
+  });
 
   window.addEventListener('hashchange', function(){
     var id = legalHashDoc();
@@ -6616,7 +6637,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     Array.prototype.forEach.call(idx, function(a){
       a.addEventListener('click', function(ev){ openLegal(ev, a.getAttribute('data-doc')); });
     });
-    var id = legalHashDoc();
+    var id = legalCurrentDoc();
     if(id){ renderLegal(id); scrollToArticle(id); }
   })();
 
