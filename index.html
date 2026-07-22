@@ -1887,6 +1887,9 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 }
 #landing-screen .lp-hero > .lp-wrap{position:relative;z-index:1;}
 #landing-screen .lp-hero-in{max-width:760px;margin:0 auto;text-align:center;}
+#landing-screen .lp-br-m{display:none;}
+#landing-screen .lp-t3-m{display:none;}
+#landing-screen .lp-sub-short{display:none;}
 #landing-screen .lp-hero h1{
   font-size:clamp(2.35rem,1.3rem + 3.8vw,3.7rem);
   font-weight:800;letter-spacing:-.042em;line-height:1.04;color:var(--lp-ink);
@@ -1906,6 +1909,18 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 #landing-screen .lp-hero-note{
   margin-top:1.15rem;font-size:.8rem;color:var(--lp-ink-3);
 }
+
+/* ---- Visual del hero en móvil: el momento comentario → DM, nativo.
+   Oculto en desktop (allí manda el panel .lp-stage). ---- */
+#landing-screen .lp-hero-flow{display:none;flex-direction:column;gap:.55rem;margin-top:1.6rem;text-align:left;}
+#landing-screen .lp-hf-card{display:flex;align-items:flex-start;gap:.6rem;border:1px solid var(--lp-line);border-radius:14px;background:var(--lp-bg);padding:.75rem .85rem;}
+#landing-screen .lp-hf-ava{width:28px;height:28px;border-radius:50%;background:rgba(15,23,42,.04);border:1px solid var(--lp-line);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--lp-ink-2);flex:none;}
+#landing-screen .lp-hf-t{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lp-ink-3);display:block;margin-bottom:.2rem;}
+#landing-screen .lp-hf-b{font-size:.86rem;color:var(--lp-ink);line-height:1.4;}
+#landing-screen .lp-hf-b b{font-weight:600;}
+#landing-screen .lp-hf-kw{font-family:var(--mono);font-size:.72rem;background:rgba(15,23,42,.04);border:1px solid var(--lp-line);border-radius:6px;padding:.1rem .38rem;}
+#landing-screen .lp-hf-ok{width:28px;height:28px;border-radius:50%;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.28);display:flex;align-items:center;justify-content:center;color:var(--lp-green-ink);flex:none;}
+#landing-screen .lp-hf-meta{font-size:.72rem;color:var(--lp-ink-3);margin-top:.15rem;}
 
 /* — escenario del panel — */
 #landing-screen .lp-stage{
@@ -1979,19 +1994,32 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 #landing-screen .lp-console-scene{width:100%;display:flex;justify-content:center;}
 
 /* — cinta de especificación — */
+/* ---- Marquee de características: dos filas en contramovimiento.
+   Sustituye la antigua franja estática de 4 celdas. Pausa al tocar/hover
+   y cae a lista estática con prefers-reduced-motion. ---- */
 #landing-screen .lp-strip{
   margin-top:clamp(2.6rem,4.5vw,3.4rem);
+  padding:1.35rem 0;
   border-top:1px solid var(--lp-line);border-bottom:1px solid var(--lp-line);
 }
-#landing-screen .lp-strip-in{
-  display:grid;grid-template-columns:repeat(4,1fr);
+#landing-screen .lp-marq{display:flex;flex-direction:column;gap:.6rem;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+#landing-screen .lp-marq-row{overflow:hidden;}
+#landing-screen .lp-marq-track{display:inline-flex;flex-wrap:nowrap;width:max-content;
+  will-change:transform;transform:translateZ(0);}
+#landing-screen .lp-marq-group{display:inline-flex;flex-wrap:nowrap;gap:.6rem;padding-right:.6rem;flex:0 0 auto;}
+@media (hover:hover) and (pointer:fine){
+  #landing-screen .lp-marq:hover .lp-marq-track{animation-play-state:paused;}
 }
-#landing-screen .lp-strip-cell{
-  padding:1.15rem 1.3rem;border-left:1px solid var(--lp-line);
-}
-#landing-screen .lp-strip-cell:first-child{border-left:none;padding-left:0;}
-#landing-screen .lp-strip-k{display:block;color:var(--lp-ink-3);margin-bottom:.42rem;}
-#landing-screen .lp-strip-v{display:block;font-size:.88rem;font-weight:500;color:var(--lp-ink);line-height:1.45;letter-spacing:-.008em;}
+@keyframes lp-marq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes lp-marq-rev{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+#landing-screen .lp-chip{display:inline-flex;align-items:center;gap:.5rem;flex:0 0 auto;
+  border:1px solid var(--lp-line);border-radius:999px;background:var(--lp-bg);
+  padding:.5rem .9rem .5rem .65rem;}
+#landing-screen .lp-chip svg{width:15px;height:15px;flex:none;color:var(--lp-ink-3);}
+#landing-screen .lp-chip-v{font-size:.84rem;font-weight:500;color:var(--lp-ink);letter-spacing:-.008em;white-space:nowrap;}
+#landing-screen .lp-chip-v b{font-weight:600;color:var(--lp-ink);}
 
 /* ---------------- secciones ---------------- */
 #landing-screen .lp-sec{padding:var(--lp-sec) 0;}
@@ -2411,10 +2439,13 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
   #landing-screen .lp-plans{grid-template-columns:1fr;gap:1.4rem;}
   #landing-screen .lp-plan-for{min-height:0;}
   #landing-screen .lp-legal-grid{grid-template-columns:1fr;}
-  #landing-screen .lp-strip-in{grid-template-columns:repeat(2,1fr);}
-  #landing-screen .lp-strip-cell{padding:1rem 1.15rem;}
-  #landing-screen .lp-strip-cell:nth-child(odd){border-left:none;padding-left:0;}
-  #landing-screen .lp-strip-cell:nth-child(n+3){border-top:1px solid var(--lp-line);}
+  /* Hero móvil: se mantiene el panel; ajustes de tamaño y aire. */
+  #landing-screen .lp-hero{padding-top:34px;}
+  #landing-screen .lp-hero h1{font-size:2.05rem;letter-spacing:-.028em;line-height:1.18;margin-bottom:1.15rem;}
+  #landing-screen .lp-hero-sub{font-size:.92rem;line-height:1.55;margin-bottom:1.25rem;color:#313C4D;}
+  #landing-screen .lp-hero-ctas .lp-btn-ghost{background:none;border:none;color:var(--lp-ink-2);text-decoration:underline;text-underline-offset:3px;padding:.55rem;}
+  #landing-screen .lp-sec{padding:3.4rem 0;}
+  #landing-screen .lp-strip{margin-top:2.1rem;padding:1.1rem 0;}
   #landing-screen .lp-footer-in{grid-template-columns:1fr 1fr;gap:2.2rem 1.5rem;}
   #landing-screen .lp-footer-brand{grid-column:1 / -1;}
   #landing-screen .lp-footer-brand p{max-width:44ch;}
@@ -2438,12 +2469,18 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
   #landing-screen .lp-nav-actions .lp-btn{padding:.52rem .85rem;font-size:.82rem;}
 
   #landing-screen .lp-hero{padding-top:40px;}
-  #landing-screen .lp-hero-in{text-align:left;}
-  #landing-screen .lp-hero-sub{margin-left:0;margin-bottom:1.5rem;}
-  #landing-screen .lp-hero-ctas{display:grid;grid-template-columns:1fr;gap:.6rem;}
+  #landing-screen .lp-hero-in{text-align:center;}
+  #landing-screen .lp-hero-sub{margin-left:auto;margin-right:auto;margin-bottom:1.5rem;max-width:34ch;}
+  #landing-screen .lp-hero-ctas{display:grid;grid-template-columns:1fr;gap:.6rem;justify-items:center;}
   #landing-screen .lp-hero-ctas .lp-btn{width:100%;padding:.85rem 1rem;}
-  #landing-screen .lp-hero-note{text-align:left;}
+  #landing-screen .lp-hero-note{text-align:center;}
+  #landing-screen .lp-hero-flow{max-width:340px;margin-left:auto;margin-right:auto;}
   #landing-screen .lp-stage{padding:.9rem;border-radius:18px;}
+  /* Marquee con más presencia en móvil: pastillas más altas y legibles. */
+  #landing-screen .lp-marq{gap:.7rem;}
+  #landing-screen .lp-chip{padding:.72rem 1.15rem .72rem .9rem;gap:.6rem;}
+  #landing-screen .lp-chip svg{width:17px;height:17px;}
+  #landing-screen .lp-chip-v{font-size:.9rem;}
 
   #landing-screen .lp-head{text-align:left;margin-bottom:2.1rem;}
   #landing-screen .lp-scope-card{padding:1.5rem 1.3rem;}
@@ -2462,10 +2499,54 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 
 @media (max-width:400px){
   #landing-screen{--lp-gut:16px;}
-  #landing-screen .lp-hero h1{font-size:1.9rem;letter-spacing:-.028em;}
+  #landing-screen .lp-hero h1{font-size:1.9rem;letter-spacing:-.028em;line-height:1.18;}
   #landing-screen .lp-strip-in{grid-template-columns:1fr;}
   #landing-screen .lp-strip-cell{border-left:none;padding-left:0;padding-right:0;}
   #landing-screen .lp-strip-cell + .lp-strip-cell{border-top:1px solid var(--lp-line);}
+}
+
+/* ==================================================================
+   HERO — SOLO MÓVIL (<768px). Compacto, limpio y premium (Linear/Stripe).
+   No toca desktop. Prioridad: título en EXACTAMENTE 2 líneas.
+   ================================================================== */
+@media (max-width:767px){
+  /* Fondo: mismo glow azul, algo más difuso. Hero más compacto. */
+  #landing-screen .lp-hero{
+    padding-top:44px;
+    background:
+      radial-gradient(115% 68% at 50% -10%, rgba(59,130,246,.13), transparent 70%),
+      linear-gradient(180deg, #FBFCFE 0%, var(--lp-white) 46%);
+  }
+  #landing-screen .lp-hero-in{max-width:520px;text-align:center;}
+
+  /* Título: pequeño y ancho, dos líneas exactas (salto forzado móvil),
+     line-height casi 1. No sobredimensionado. */
+  #landing-screen .lp-hero h1{
+    font-size:clamp(1.3rem,6.5vw,2.2rem);
+    line-height:.98;letter-spacing:-.03em;font-weight:700;
+    max-width:24ch;margin:0 auto .75rem;
+  }
+  #landing-screen .lp-br-m{display:inline;}
+  /* Azul: mantiene su subrayado y un ligero aumento de peso, integrado. */
+  #landing-screen .lp-hero h1 .hl{font-weight:800;}
+  /* Tercera línea: una palabra, ligeramente más pequeña y que se note. */
+  #landing-screen .lp-t3-m{display:block;font-size:.6em;font-weight:600;color:var(--lp-ink-2);letter-spacing:-.01em;margin-top:.42rem;}
+
+  /* Subtítulo: más ancho (hacia los lados), versión corta en móvil. */
+  #landing-screen .lp-hero-sub{
+    font-size:1rem;line-height:1.6;color:#313C4D;
+    max-width:37ch;margin:0 auto 1.5rem;
+  }
+  #landing-screen .lp-sub-full{display:none;}
+  #landing-screen .lp-sub-short{display:inline;}
+
+  /* CTAs: full width, aire moderado alrededor. Botón sin cambios de estilo. */
+  #landing-screen .lp-hero-ctas{display:grid;grid-template-columns:1fr;gap:.75rem;justify-items:center;}
+  #landing-screen .lp-hero-ctas .lp-btn{width:100%;}
+  #landing-screen .lp-hero-note{margin-top:1rem;}
+
+  /* Dashboard: sube para asomar dentro de la primera pantalla. */
+  #landing-screen .lp-stage{margin-top:.6rem;}
 }
 </style>
 <script>
@@ -2515,13 +2596,32 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
 <header class="lp-hero">
   <div class="lp-wrap">
     <div class="lp-hero-in">
-      <h1>Convierte comentarios en <span class="hl">entregas automáticas</span></h1>
-      <p class="lp-hero-sub">Elige una palabra clave, escribe tu mensaje y WalkyChat entrega tu recurso por DM a cada persona que la comente. Sin que estés pendiente del teléfono.</p>
+      <h1>Convierte comentarios en<br class="lp-br-m"> <span class="hl">entregas automáticas</span><br class="lp-br-m"><span class="lp-t3-m">al instante</span></h1>
+      <p class="lp-hero-sub"><span class="lp-sub-full">Elige una palabra clave, escribe tu mensaje y WalkyChat entrega tu recurso por DM a cada persona que la comente. Sin que estés pendiente del teléfono.</span><span class="lp-sub-short">Elige una palabra clave y WalkyChat entrega tu recurso por DM a quien la comente.</span></p>
       <div class="lp-hero-ctas">
         <a class="lp-btn lp-btn-primary lp-btn-lg" href="#" onclick="enterAppFromLanding(event, 'register')">Empezar gratis</a>
         <a class="lp-btn lp-btn-ghost lp-btn-lg" href="#lp-como">Ver cómo funciona</a>
       </div>
       <p class="lp-hero-note">Sin tarjeta para empezar · Conexión oficial con Instagram en desarrollo</p>
+
+      <!-- Visual móvil: el momento comentario → DM (oculto en desktop) -->
+      <div class="lp-hero-flow" aria-hidden="true">
+        <div class="lp-hf-card">
+          <span class="lp-hf-ava">L</span>
+          <span>
+            <span class="lp-hf-t">Comentario en tu publicación</span>
+            <span class="lp-hf-b"><b>laura_creativa</b> Me interesa 🙌 <span class="lp-hf-kw">GUÍA</span></span>
+          </span>
+        </div>
+        <div class="lp-hf-card">
+          <span class="lp-hf-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span>
+            <span class="lp-hf-t">WalkyChat responde</span>
+            <span class="lp-hf-b">Recurso enviado por DM</span>
+            <span class="lp-hf-meta">hace 2 s · palabra clave GUÍA</span>
+          </span>
+        </div>
+      </div>
     </div>
 
     <!-- El panel real de WalkyChat -->
@@ -2589,27 +2689,13 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
     </div>
 
     <!-- Cinta de especificación -->
-    <div class="lp-strip">
-      <div class="lp-strip-in">
-        <div class="lp-strip-cell">
-          <span class="lp-mono lp-strip-k">Entrega</span>
-          <span class="lp-strip-v">Por DM, en cuanto llega el comentario</span>
-        </div>
-        <div class="lp-strip-cell">
-          <span class="lp-mono lp-strip-k">Palabra clave</span>
-          <span class="lp-strip-v">Hasta 11 caracteres, la eliges tú</span>
-        </div>
-        <div class="lp-strip-cell">
-          <span class="lp-mono lp-strip-k">Publicaciones</span>
-          <span class="lp-strip-v">Hasta 6 por palabra clave</span>
-        </div>
-        <div class="lp-strip-cell">
-          <span class="lp-mono lp-strip-k">Registro</span>
-          <span class="lp-strip-v">Cada detección y cada envío, anotados</span>
+          <div class="lp-strip" aria-label="Características de WalkyChat">
+        <div class="lp-marq">
+          <div class="lp-marq-row"><div class="lp-marq-track"><div class="lp-marq-group"><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg><span class="lp-chip-v">Entrega por DM <b>al instante</b></span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg><span class="lp-chip-v">Palabra clave de hasta <b>11 caracteres</b></span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="lp-chip-v">Hasta <b>6 publicaciones</b> por palabra</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg><span class="lp-chip-v"><b>Registro</b> de cada detección y envío</span></span></div><div class="lp-marq-group" aria-hidden="true"><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg><span class="lp-chip-v">Entrega por DM <b>al instante</b></span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg><span class="lp-chip-v">Palabra clave de hasta <b>11 caracteres</b></span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="lp-chip-v">Hasta <b>6 publicaciones</b> por palabra</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg><span class="lp-chip-v"><b>Registro</b> de cada detección y envío</span></span></div></div></div>
+          <div class="lp-marq-row lp-marq-rev"><div class="lp-marq-track"><div class="lp-marq-group"><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 0 1-4-.84L3 20l1.1-3.3A7.48 7.48 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg><span class="lp-chip-v"><b>Respuesta pública</b> en el comentario</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg><span class="lp-chip-v">Pedir <b>seguir</b> antes de entregar</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V7M17 15v-6"/></svg><span class="lp-chip-v"><b>Métricas reales</b> por palabra clave</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-13h-7l1-7z"/></svg><span class="lp-chip-v">Funciona <b>24/7</b>, también de madrugada</span></span></div><div class="lp-marq-group" aria-hidden="true"><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 0 1-4-.84L3 20l1.1-3.3A7.48 7.48 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg><span class="lp-chip-v"><b>Respuesta pública</b> en el comentario</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg><span class="lp-chip-v">Pedir <b>seguir</b> antes de entregar</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V7M17 15v-6"/></svg><span class="lp-chip-v"><b>Métricas reales</b> por palabra clave</span></span><span class="lp-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-13h-7l1-7z"/></svg><span class="lp-chip-v">Funciona <b>24/7</b>, también de madrugada</span></span></div></div></div>
         </div>
       </div>
-    </div>
-  </div>
+      </div>
 </header>
 
 <!-- ============ CÓMO FUNCIONA ============ -->
@@ -3330,10 +3416,10 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       <div class="lp-footer-col lp-footer-social">
         <span class="lp-mono">Social</span>
         <a href="https://www.instagram.com/walkychat" target="_blank" rel="noopener noreferrer" aria-label="Instagram: @walkychat">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span>@walkychat</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span>@walkychat</span>
         </a>
         <a href="https://www.facebook.com/share/1DrgKKz4GQ/" target="_blank" rel="noopener noreferrer" aria-label="Facebook: WalkyChat">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span>WalkyChat</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span>WalkyChat</span>
         </a>
       </div>
     </div>
@@ -6655,6 +6741,47 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus,
       });
     }, { root: root, threshold: 0.12 });
     els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ============ MARQUEE (movimiento por JS, no CSS) ============
+     La animación CSS se pausa en iOS con Bajo Consumo y con Reducir movimiento.
+     Este motor por requestAnimationFrame se mueve en cualquier navegador con JS.
+     Respeta Reducir movimiento (ahí se queda estático, como debe ser). */
+  (function(){
+    var tracks = document.querySelectorAll('#landing-screen .lp-marq-track');
+    if(!tracks.length || !window.requestAnimationFrame) return;
+
+    tracks.forEach(function(track){
+      var group = track.querySelector('.lp-marq-group');
+      if(!group) return;
+      var row = track.parentNode;
+      var rev = row && row.classList.contains('lp-marq-rev');
+      var speed = rev ? 24 : 28;   // px por segundo
+      var w = 0, x = 0, last = null, paused = false, started = false;
+
+      track.addEventListener('mouseenter', function(){ paused = true; });
+      track.addEventListener('mouseleave', function(){ paused = false; });
+
+      function measure(){ w = group.getBoundingClientRect().width; }
+
+      function step(t){
+        if(w <= 0){ measure(); if(w > 0){ x = rev ? -w : 0; started = true; } }
+        if(started && !paused){
+          if(last != null){
+            var dt = (t - last) / 1000;
+            if(dt > 0.1) dt = 0.1; // evita saltos si la pestaña estuvo inactiva
+            x += (rev ? 1 : -1) * speed * dt;
+            if(!rev && x <= -w) x += w;
+            if(rev && x >= 0) x -= w;
+            track.style.transform = 'translateX(' + x.toFixed(2) + 'px)';
+          }
+        }
+        last = t;
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      window.addEventListener('resize', function(){ w = 0; last = null; });
+    });
   })();
 
   /* ===================== INIT (arranque) ===================== */
